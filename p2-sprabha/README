@@ -1,0 +1,18 @@
+Name: Shreyas Prabhakar
+
+Clemson Email Address: sprabha@g.clemson.edu
+
+Project no: 2
+
+Project due date: 21st September 2017
+
+Project description: Drawing with SDL 2.0
+
+The easiest part of this project: Initial Setup of Creating the Window and getting premitives to work
+
+Problems that I had in completing this project: 
+	1. I found out the hard way of the limitations of SDL_RenderFillRect, as the rectangle that can be created using SDL_RenderDrawRect or SDL_RenderFillRect should always be parallel to x and y - axes. And most of the rectangles in my BiCycle drawing were at an angle to the axes.
+	2. Filling the Triangle that I have used for the bicycle seat was also a problem.
+	3. I had a bit of problem with the overloaded output operator as well. Declaring it outside the class or using the friend keyword worked.
+	4. Declaring the PI and Deg2RAD variables within in the class (in public or private) gave me segmentation faults, so I had to declare it globally.
+	5. Had trouble getting back and passing the renderer and window pointers from my Draw class to the FrameFrnerator class. I was getting a completely black image in frames folder.So I ended up creating a function in my Draw class and using the FrameGenerator object in that class to create my .bmp file.
