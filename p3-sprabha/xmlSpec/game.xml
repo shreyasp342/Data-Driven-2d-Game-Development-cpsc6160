@@ -18,14 +18,44 @@
 
 <world>
   <width>2000</width>
-  <height>800</height>
+  <height>1080</height>
 </world>
 
-<back>
+<background>
   <file>assets/checkerboard.bmp</file>
   <factor>1</factor>
   <transparency>false</transparency>
-</back>
+</background>
+
+<clouds>
+  <file>assets/clouds.png</file>
+  <factor>1</factor>
+  <transparency>true</transparency>
+</clouds>
+
+<mountain>
+  <file>assets/mountain.png</file>
+  <factor>1</factor>
+  <transparency>true</transparency>
+</mountain>
+
+<trees1>
+  <file>assets/trees1.png</file>
+  <factor>1</factor>
+  <transparency>true</transparency>
+</trees1>
+
+<trees2>
+  <file>assets/trees2.png</file>
+  <factor>1</factor>
+  <transparency>true</transparency>
+</trees2>
+
+<trees3>
+  <file>assets/trees3.png</file>
+  <factor>1</factor>
+  <transparency>false</transparency>
+</trees3>
 
 <font name="font">
   <file>fonts/arial.ttf</file>

@@ -21,7 +21,12 @@ Engine::Engine() :
   io( IOmod::getInstance() ),
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
-  world("back", Gamedata::getInstance().getXmlInt("back/factor") ),
+  background("background", Gamedata::getInstance().getXmlInt("background/factor") ),
+  // clouds("clouds", Gamedata::getInstance().getXmlInt("clouds/factor") ),
+  mountain("mountain", Gamedata::getInstance().getXmlInt("mountain/factor") ),
+  // trees1("trees1", Gamedata::getInstance().getXmlInt("trees1/factor") ),
+  // trees2("trees2", Gamedata::getInstance().getXmlInt("trees2/factor") ),
+  trees3("trees3", Gamedata::getInstance().getXmlInt("trees3/factor") ),
   viewport( Viewport::getInstance() ),
   star(new Sprite("YellowStar")),
   spinningStar(new MultiSprite("SpinningStar")),
@@ -34,7 +39,12 @@ Engine::Engine() :
 }
 
 void Engine::draw() const {
-  world.draw();
+  background.draw();
+  // clouds.draw();
+  mountain.draw();
+  // trees1.draw();
+  // trees2.draw();
+  trees3.draw();
 
   star->draw();
   spinningStar->draw();
@@ -55,7 +65,12 @@ void Engine::draw() const {
 void Engine::update(Uint32 ticks) {
   star->update(ticks);
   spinningStar->update(ticks);
-  world.update();
+  background.update();
+  // clouds.update();
+  mountain.update();
+  // trees1.update();
+  // trees2.update();
+  trees3.update();
   viewport.update(); // always update viewport last
 }
 
