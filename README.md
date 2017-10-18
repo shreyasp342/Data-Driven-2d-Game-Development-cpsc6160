@@ -3,7 +3,7 @@
 ## Project 2
 Drawing with SDL 2.0
 
-![BiCycle](p2-sprabha/frames/sprabha.png "BiCycle")
+![BiCycle](p2-sprabha/frames/sprabha.bmp "BiCycle")
 
 ## Project 3
 Tracking a Sprite
