@@ -3,5 +3,5 @@
 ## Project 2
 Drawing with SDL 2.0
 
-![BiCycle](p2-sprabha/frames/sprabha.png "BiCycle")
+![BiCycle](frames/sprabha.bmp "BiCycle")
 
