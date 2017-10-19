@@ -22,7 +22,7 @@
 </world>
 
 <background>
-  <file>assets/checkerboard.bmp</file>
+  <file>assets/background.png</file>
   <factor>1</factor>
   <transparency>false</transparency>
 </background>
@@ -86,6 +86,30 @@
   <speedY>200</speedY>
   <transparency>false</transparency>
 </SpinningStar>
+
+<zoro>
+  <file>assets/zororight.png</file>
+  <startLoc x="50" y="950"/>
+  <frames>8</frames>
+  <imageWidth>143</imageWidth>
+  <imageHeight>161</imageHeight>
+  <frameInterval>50</frameInterval>
+  <speedX>200</speedX>
+  <speedY>200</speedY>
+  <transparency>true</transparency>
+</zoro>
+
+<zoroLeft>
+  <file>assets/zoroleft.png</file>
+  <startLoc x="50" y="950"/>
+  <frames>8</frames>
+  <imageWidth>143</imageWidth>
+  <imageHeight>161</imageHeight>
+  <frameInterval>50</frameInterval>
+  <speedX>200</speedX>
+  <speedY>200</speedY>
+  <transparency>true</transparency>
+</zoroLeft>
 
 <YellowStar>
   <file>assets/yellowstar32.png</file>

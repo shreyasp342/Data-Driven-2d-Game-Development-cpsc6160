@@ -1,6 +1,7 @@
 #include <vector>
 #include <SDL.h>
 #include "ioMod.h"
+#include <vector>
 #include "renderContext.h"
 #include "clock.h"
 #include "world.h"
@@ -10,6 +11,8 @@ class Engine {
 public:
   Engine ();
   ~Engine ();
+  Engine(const Engine&) = delete;
+  Engine& operator=(const Engine&) = delete;
   void play();
   void switchSprite();
 
@@ -27,17 +30,15 @@ private:
   World trees3;
   Viewport& viewport;
 
-  Drawable* star;
-  Drawable* spinningStar;
+  std::vector <Drawable*> sprites;
+  // Drawable* star;
+  // Drawable* spinningStar;
   int currentSprite;
 
   bool makeVideo;
 
   void draw() const;
   void update(Uint32);
-
-  Engine(const Engine&);
-  Engine& operator=(const Engine&);
   void printScales() const;
   void checkForCollisions();
 };

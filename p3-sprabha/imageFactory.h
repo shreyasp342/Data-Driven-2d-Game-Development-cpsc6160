@@ -10,6 +10,8 @@ public:
 
   static ImageFactory& getInstance();
   ~ImageFactory();
+  ImageFactory(const ImageFactory&) = delete;
+  ImageFactory& operator=(const ImageFactory&) = delete;
 
   Image* getImage(const std::string&);
   std::vector<Image*> getImages(const std::string&);
@@ -35,6 +37,4 @@ private:
     multiTextures(),
     multiImages()
   {}
-  ImageFactory(const ImageFactory&);
-  ImageFactory& operator=(const ImageFactory&);
 };
