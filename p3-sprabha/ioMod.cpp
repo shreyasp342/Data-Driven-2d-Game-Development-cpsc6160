@@ -26,10 +26,10 @@ IOmod::IOmod() :
   if (font == NULL) {
     throw std::string("error: font not found");
   }
-  // textColor.r = Gamedata::getInstance().getXmlInt("font/red");
-  // textColor.g = Gamedata::getInstance().getXmlInt("font/green");
-  // textColor.b = Gamedata::getInstance().getXmlInt("font/blue");
-  // textColor.a = Gamedata::getInstance().getXmlInt("font/alpha");
+  textColor.r = Gamedata::getInstance().getXmlInt("font/red");
+  textColor.g = Gamedata::getInstance().getXmlInt("font/green");
+  textColor.b = Gamedata::getInstance().getXmlInt("font/blue");
+  textColor.a = Gamedata::getInstance().getXmlInt("font/alpha");
 }
 
 SDL_Texture* IOmod::readTexture(const std::string& filename) {

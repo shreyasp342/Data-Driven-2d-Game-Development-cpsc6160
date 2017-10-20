@@ -39,7 +39,9 @@ void Viewport::draw() const {
   textColor.g = Gamedata::getInstance().getXmlInt("namefont/green");
   textColor.b = Gamedata::getInstance().getXmlInt("namefont/blue");
   textColor.a = Gamedata::getInstance().getXmlInt("namefont/alpha");
-  IOmod::getInstance().writeText("Shreyas ", 30, 430, textColor);
+  std::stringstream name;
+  name << "Shreyas Prabhakar";
+  IOmod::getInstance().writeText(name.str(), 30, 430, textColor);
 }
 
 void Viewport::update() {

@@ -58,7 +58,6 @@ twowaySprite& twowaySprite::operator=(const twowaySprite& s) {
 
 void twowaySprite::draw() const { 
   images[currentFrame]->draw(getX(), getY(), getScale());
-  // images[currentFrame]->draw(getX(), 950, getScale());
 }
 
 void twowaySprite::update(Uint32 ticks) { 

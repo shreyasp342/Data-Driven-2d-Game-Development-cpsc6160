@@ -17,45 +17,27 @@
 </view>
 
 <world>
-  <width>2000</width>
-  <height>1080</height>
+  <width>2048</width>
+  <height>600</height>
 </world>
 
-<background>
-  <file>assets/background.png</file>
-  <factor>1</factor>
+<sky>
+  <file>assets/sky.png</file>
+  <factor>2</factor>
   <transparency>false</transparency>
-</background>
+</sky>
 
-<clouds>
-  <file>assets/clouds.png</file>
+<city>
+  <file>assets/city.png</file>
+  <factor>3</factor>
+  <transparency>true</transparency>
+</city>
+
+<land>
+  <file>assets/land.png</file>
   <factor>1</factor>
   <transparency>true</transparency>
-</clouds>
-
-<mountain>
-  <file>assets/mountain.png</file>
-  <factor>1</factor>
-  <transparency>true</transparency>
-</mountain>
-
-<trees1>
-  <file>assets/trees1.png</file>
-  <factor>1</factor>
-  <transparency>true</transparency>
-</trees1>
-
-<trees2>
-  <file>assets/trees2.png</file>
-  <factor>1</factor>
-  <transparency>true</transparency>
-</trees2>
-
-<trees3>
-  <file>assets/trees3.png</file>
-  <factor>1</factor>
-  <transparency>false</transparency>
-</trees3>
+</land>
 
 <font name="font">
   <file>fonts/arial.ttf</file>
@@ -75,48 +57,96 @@
   <alpha>0</alpha>
 </namefont>
 
-<SpinningStar>
-  <file>assets/spinstar.png</file>
-  <startLoc x="50" y="140"/>
-  <frames>4</frames>
-  <imageWidth>32</imageWidth>
-  <imageHeight>32</imageHeight>
-  <frameInterval>50</frameInterval>
-  <speedX>200</speedX>
-  <speedY>200</speedY>
+<dragonBall>
+  <file>assets/dragonball.png</file>
+  <startLoc x="227" y="240"/>
+  <speedX>350</speedX>
+  <speedY>350</speedY>
   <transparency>false</transparency>
-</SpinningStar>
+</dragonBall>
+
+<valor>
+  <file>assets/valor.png</file>
+  <startLoc x="50" y="80"/>
+  <frames>121</frames>
+  <imageWidth>100</imageWidth>
+  <imageHeight>178</imageHeight>
+  <frameInterval>15</frameInterval>
+  <speedX>150</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</valor>
+
+<cycle>
+  <file>assets/cycleright.png</file>
+  <startLoc x="50" y="410"/>
+  <frames>2</frames>
+  <imageWidth>160</imageWidth>
+  <imageHeight>120</imageHeight>
+  <frameInterval>80</frameInterval>
+  <speedX>300</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</cycle>
+
+<cycleLeft>
+  <file>assets/cycleleft.png</file>
+  <startLoc x="50" y="140"/>
+  <frames>2</frames>
+  <imageWidth>160</imageWidth>
+  <imageHeight>120</imageHeight>
+  <frameInterval>80</frameInterval>
+  <speedX>300</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</cycleLeft>
+
+<sanji>
+  <file>assets/sanjirunright.png</file>
+  <startLoc x="50" y="450"/>
+  <frames>6</frames>
+  <imageWidth>139</imageWidth>
+  <imageHeight>119</imageHeight>
+  <frameInterval>90</frameInterval>
+  <speedX>250</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</sanji>
+
+<sanjiLeft>
+  <file>assets/sanjirunleft.png</file>
+  <startLoc x="50" y="450"/>
+  <frames>6</frames>
+  <imageWidth>139</imageWidth>
+  <imageHeight>119</imageHeight>
+  <frameInterval>90</frameInterval>
+  <speedX>250</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</sanjiLeft>
 
 <zoro>
   <file>assets/zororight.png</file>
-  <startLoc x="50" y="950"/>
+  <startLoc x="50" y="400"/>
   <frames>8</frames>
   <imageWidth>143</imageWidth>
   <imageHeight>161</imageHeight>
-  <frameInterval>50</frameInterval>
+  <frameInterval>90</frameInterval>
   <speedX>200</speedX>
-  <speedY>200</speedY>
+  <speedY>0</speedY>
   <transparency>true</transparency>
 </zoro>
 
 <zoroLeft>
   <file>assets/zoroleft.png</file>
-  <startLoc x="50" y="950"/>
+  <startLoc x="50" y="400"/>
   <frames>8</frames>
   <imageWidth>143</imageWidth>
   <imageHeight>161</imageHeight>
-  <frameInterval>50</frameInterval>
+  <frameInterval>90</frameInterval>
   <speedX>200</speedX>
-  <speedY>200</speedY>
+  <speedY>0</speedY>
   <transparency>true</transparency>
 </zoroLeft>
-
-<YellowStar>
-  <file>assets/yellowstar32.png</file>
-  <startLoc x="227" y="240"/>
-  <speedX>300</speedX>
-  <speedY>300</speedY>
-  <transparency>false</transparency>
-</YellowStar>
 
 </GameData>

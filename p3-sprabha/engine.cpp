@@ -13,8 +13,6 @@
 #include "frameGenerator.h"
 
 Engine::~Engine() { 
-  // delete star;
-  // delete spinningStar;
   for(auto sprite : sprites){
   	delete sprite;
   }
@@ -27,37 +25,28 @@ Engine::Engine() :
   io( IOmod::getInstance() ),
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
-  background("background", Gamedata::getInstance().getXmlInt("background/factor") ),
-  // clouds("clouds", Gamedata::getInstance().getXmlInt("clouds/factor") ),
-  mountain("mountain", Gamedata::getInstance().getXmlInt("mountain/factor") ),
-  // trees1("trees1", Gamedata::getInstance().getXmlInt("trees1/factor") ),
-  // trees2("trees2", Gamedata::getInstance().getXmlInt("trees2/factor") ),
-  trees3("trees3", Gamedata::getInstance().getXmlInt("trees3/factor") ),
+  sky("sky", Gamedata::getInstance().getXmlInt("sky/factor") ),
+  city("city", Gamedata::getInstance().getXmlInt("city/factor") ),
+  land("land", Gamedata::getInstance().getXmlInt("land/factor") ),
   viewport( Viewport::getInstance() ),
-  // star(new Sprite("YellowStar")),
-  // spinningStar(new MultiSprite("SpinningStar")),
   currentSprite(0),
   makeVideo( false )
 {
   
+  sprites.push_back(new Sprite("dragonBall")),
+  sprites.push_back(new MultiSprite("valor")),
+  sprites.push_back(new twowaySprite("cycle")),
+  sprites.push_back(new twowaySprite("sanji")),
   sprites.push_back(new twowaySprite("zoro")),
-  sprites.push_back(new Sprite("YellowStar")),
-  sprites.push_back(new MultiSprite("SpinningStar")),
 
   Viewport::getInstance().setObjectToTrack(sprites.at(currentSprite));
   std::cout << "Loading complete" << std::endl;
 }
 
 void Engine::draw() const {
-  background.draw();
-  // clouds.draw();
-  mountain.draw();
-  // trees1.draw();
-  // trees2.draw();
-  trees3.draw();
-
-  // star->draw();
-  // spinningStar->draw();
+  sky.draw();
+  city.draw();
+  land.draw();
   for(auto sprite : sprites){
   	sprite->draw();
   }
@@ -68,39 +57,27 @@ void Engine::draw() const {
   textColor.g = Gamedata::getInstance().getXmlInt("font/green");
   textColor.b = Gamedata::getInstance().getXmlInt("font/blue");
   textColor.a = Gamedata::getInstance().getXmlInt("font/alpha");
+  
   std::stringstream fps;
   fps << "Frame Rate: " << clock.getFps() << " fps" << std::endl;
-  // io.writeText("Tracking: "+objectToTrack->getName(), 30, 30, textColor);
   io.writeText(fps.str(), 30, 60, textColor);
+  
   SDL_RenderPresent(renderer);
 }
 
 void Engine::update(Uint32 ticks) {
-  // star->update(ticks);
-  // spinningStar->update(ticks);
-
   for(auto sprite : sprites){
   	sprite->update(ticks);
   }
-
-  background.update();
-  // clouds.update();
-  mountain.update();
-  // trees1.update();
-  // trees2.update();
-  trees3.update();
+  sky.update();
+  city.update();
+  land.update();
   viewport.update(); // always update viewport last
 }
 
 void Engine::switchSprite(){
   ++currentSprite;
   currentSprite = currentSprite % sprites.size();
-  // if ( currentSprite ) {
-  //   Viewport::getInstance().setObjectToTrack(sprites.at(currentSprite));
-  // }
-  // else {
-  //   Viewport::getInstance().setObjectToTrack(sprites.at(currentSprite));
-  // }
   Viewport::getInstance().setObjectToTrack(sprites.at(currentSprite));
   
 }
