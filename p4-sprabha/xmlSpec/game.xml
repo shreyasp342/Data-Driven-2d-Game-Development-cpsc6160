@@ -1,0 +1,152 @@
+<?xml version = "1.0"?>
+<GameData>
+<!-- screenTitle is also used to identify you and your animation. 
+     So make sure to include your name as part of the screenTitle -->
+<title>The Tracker Framework</title>
+<maxStringSize>50</maxStringSize>
+
+<frameCapOn>true</frameCapOn>
+<period>17</period>
+
+<maxFrames>300</maxFrames>
+<username>sprabha</username>
+
+<view>
+  <width>854</width>
+  <height>480</height>
+</view>
+
+<world>
+  <width>2048</width>
+  <height>600</height>
+</world>
+
+<sky>
+  <file>assets/sky.png</file>
+  <factor>2</factor>
+  <transparency>false</transparency>
+</sky>
+
+<city>
+  <file>assets/city.png</file>
+  <factor>3</factor>
+  <transparency>true</transparency>
+</city>
+
+<land>
+  <file>assets/land.png</file>
+  <factor>1</factor>
+  <transparency>true</transparency>
+</land>
+
+<font name="font">
+  <file>fonts/arial.ttf</file>
+  <size>24</size>
+  <red>0</red>
+  <green>255</green>
+  <blue>0</blue>
+  <alpha>0</alpha>
+</font>
+
+<namefont name="myName">
+  <file>fonts/arial.ttf</file>
+  <size>24</size>
+  <red>255</red>
+  <green>255</green>
+  <blue>0</blue>
+  <alpha>0</alpha>
+</namefont>
+
+<dragonBall>
+  <file>assets/dragonball.png</file>
+  <startLoc x="227" y="240"/>
+  <speedX>350</speedX>
+  <speedY>350</speedY>
+  <transparency>false</transparency>
+</dragonBall>
+
+<valor>
+  <file>assets/valor.png</file>
+  <startLoc x="50" y="80"/>
+  <frames>121</frames>
+  <imageWidth>100</imageWidth>
+  <imageHeight>178</imageHeight>
+  <frameInterval>15</frameInterval>
+  <speedX>150</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</valor>
+
+<cycle>
+  <file>assets/cycleright.png</file>
+  <startLoc x="50" y="410"/>
+  <frames>2</frames>
+  <imageWidth>160</imageWidth>
+  <imageHeight>120</imageHeight>
+  <frameInterval>80</frameInterval>
+  <speedX>300</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</cycle>
+
+<cycleLeft>
+  <file>assets/cycleleft.png</file>
+  <startLoc x="50" y="140"/>
+  <frames>2</frames>
+  <imageWidth>160</imageWidth>
+  <imageHeight>120</imageHeight>
+  <frameInterval>80</frameInterval>
+  <speedX>300</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</cycleLeft>
+
+<sanji>
+  <file>assets/sanjirunright.png</file>
+  <startLoc x="50" y="450"/>
+  <frames>6</frames>
+  <imageWidth>139</imageWidth>
+  <imageHeight>119</imageHeight>
+  <frameInterval>90</frameInterval>
+  <speedX>250</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</sanji>
+
+<sanjiLeft>
+  <file>assets/sanjirunleft.png</file>
+  <startLoc x="50" y="450"/>
+  <frames>6</frames>
+  <imageWidth>139</imageWidth>
+  <imageHeight>119</imageHeight>
+  <frameInterval>90</frameInterval>
+  <speedX>250</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</sanjiLeft>
+
+<zoro>
+  <file>assets/zororight.png</file>
+  <startLoc x="50" y="400"/>
+  <frames>8</frames>
+  <imageWidth>143</imageWidth>
+  <imageHeight>161</imageHeight>
+  <frameInterval>90</frameInterval>
+  <speedX>200</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</zoro>
+
+<zoroLeft>
+  <file>assets/zoroleft.png</file>
+  <startLoc x="50" y="400"/>
+  <frames>8</frames>
+  <imageWidth>143</imageWidth>
+  <imageHeight>161</imageHeight>
+  <frameInterval>90</frameInterval>
+  <speedX>200</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</zoroLeft>
+
+</GameData>
