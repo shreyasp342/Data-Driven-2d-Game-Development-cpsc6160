@@ -82,4 +82,22 @@ void twowaySprite::update(Uint32 ticks) {
     images = imagesLeft;
   }  
 
+  // const Uint8* keystate;
+  // // Uint32 ticks = clock.getElapsedTicks();
+  
+
+  //   // In this section of the event loop we allow key bounce:
+  //   // ticks = clock.getElapsedTicks();
+  //   if ( ticks > 0 ) {
+  //     // clock.incrFrame();
+  //     if (keystate[SDL_SCANCODE_A]) {
+  //       // sanji->left();
+  //       images = imagesLeft;
+  //     }
+  //     if (keystate[SDL_SCANCODE_D]) {
+  //       // sanji->right();
+  //       images = imagesRight;
+  //     }
+  //   }
+
 }

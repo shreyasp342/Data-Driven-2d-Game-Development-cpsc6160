@@ -6,6 +6,7 @@
 #include "clock.h"
 #include "world.h"
 #include "viewport.h"
+#include "player.h"
 
 class Engine {
 public:
@@ -25,9 +26,11 @@ private:
   World sky;
   World city;
   World land;
-  Viewport& viewport;
 
-  std::vector <Drawable*> sprites;
+  // std::vector <Drawable*> sprites;
+  Player* sanji;
+
+  Viewport& viewport;
   int currentSprite;
 
   bool makeVideo;

@@ -109,7 +109,7 @@
   <imageHeight>119</imageHeight>
   <frameInterval>90</frameInterval>
   <speedX>250</speedX>
-  <speedY>0</speedY>
+  <speedY>250</speedY>
   <transparency>true</transparency>
 </sanji>
 
