@@ -11,6 +11,7 @@
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
+#include "hud.h"
 
 Engine::~Engine() { 
   for(auto sprite : sprites){
@@ -30,7 +31,8 @@ Engine::Engine() :
   land("land", Gamedata::getInstance().getXmlInt("land/factor") ),
   viewport( Viewport::getInstance() ),
   currentSprite(0),
-  makeVideo( false )
+  makeVideo( false ),
+  showHud( false )
 {
   
   sprites.push_back(new Sprite("dragonBall")),
@@ -61,8 +63,14 @@ void Engine::draw() const {
   std::stringstream fps;
   fps << "Frame Rate: " << clock.getFps() << " fps" << std::endl;
   io.writeText(fps.str(), 30, 60, textColor);
+
+  drawHud();
   
   SDL_RenderPresent(renderer);
+
+  // if(clock.getSeconds() > 3){
+  // 	showHud = false;
+  // }
 }
 
 void Engine::update(Uint32 ticks) {
@@ -79,7 +87,12 @@ void Engine::switchSprite(){
   ++currentSprite;
   currentSprite = currentSprite % sprites.size();
   Viewport::getInstance().setObjectToTrack(sprites.at(currentSprite));
-  
+}
+
+void Engine::drawHud() const {
+  if (showHud || clock.getSeconds() <= 3){
+  	Hud::getInstance().draw(renderer);
+  }
 }
 
 void Engine::play() {
@@ -113,6 +126,12 @@ void Engine::play() {
         else if (keystate[SDL_SCANCODE_F4] && makeVideo) {
           std::cout << "Terminating frame capture" << std::endl;
           makeVideo = false;
+        }
+        if (keystate[SDL_SCANCODE_F1] && !showHud) {
+          showHud = true;
+        }
+        else if (keystate[SDL_SCANCODE_F1] && showHud) {
+          showHud = false;
         }
       }
     }

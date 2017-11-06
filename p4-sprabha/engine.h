@@ -31,8 +31,10 @@ private:
   int currentSprite;
 
   bool makeVideo;
+  bool showHud;
 
   void draw() const;
+  void drawHud() const;
   void update(Uint32);
   void printScales() const;
   void checkForCollisions();

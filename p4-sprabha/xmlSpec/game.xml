@@ -149,4 +149,37 @@
   <transparency>true</transparency>
 </zoroLeft>
 
+<hud>
+  <posX>614</posX>
+  <posY>20</posY>
+  <width>220</width>
+  <height>200</height>
+  <hudColor>
+    <red>255</red>
+    <green>0</green>
+    <blue>0</blue>
+    <alpha>100</alpha>
+  </hudColor>
+  <border>
+    <thickness>5</thickness>
+    <Color>
+      <red>255</red>
+      <green>0</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </Color>
+  </border>
+  <textColor>
+    <red>255</red>
+    <green>255</green>
+    <blue>0</blue>
+    <alpha>0</alpha>
+  </textColor>
+  <text>Player Controls</text>
+  <w>    w -> UP</w>
+  <a>    a -> LEFT</a>
+  <s>    s -> DOWN</s>
+  <d>    d -> RIGHT</d>
+</hud>
+
 </GameData>
