@@ -51,25 +51,22 @@ Engine::Engine() :
   makeVideo( false ),
   showHud( false )
 {
-  int n = 4;
-  dragonballs.reserve(n);
   Vector2f pos = player->getPosition();
   int w = player->getScaledWidth();
   int h = player->getScaledHeight();
-
-    dragonballs.push_back( new SmartSprite("Ball1", pos, w, h) );
-    dragonballs.push_back( new SmartSprite("Ball2", pos, w, h) );
-    dragonballs.push_back( new SmartSprite("Ball3", pos, w, h) );
-    dragonballs.push_back( new SmartSprite("Ball4", pos, w, h) );
-    dragonballs.push_back( new SmartSprite("Ball5", pos, w, h) );
-    dragonballs.push_back( new SmartSprite("Ball6", pos, w, h) );
-    dragonballs.push_back( new SmartSprite("Ball7", pos, w, h) );
+  dragonballs.push_back( new SmartSprite("Ball1", pos, w, h) );
+  dragonballs.push_back( new SmartSprite("Ball2", pos, w, h) );
+  dragonballs.push_back( new SmartSprite("Ball3", pos, w, h) );
+  dragonballs.push_back( new SmartSprite("Ball4", pos, w, h) );
+  dragonballs.push_back( new SmartSprite("Ball5", pos, w, h) );
+  dragonballs.push_back( new SmartSprite("Ball6", pos, w, h) );
+  dragonballs.push_back( new SmartSprite("Ball7", pos, w, h) );
   for (unsigned int i = 0; i < dragonballs.size(); ++i) {
     player->attach( dragonballs[i] );
   }
+
   sprites.push_back(new MultiSprite("valor"));
   sprites.push_back(new twowaySprite("cycle"));
-
   
   strategies.push_back( new PerPixelCollisionStrategy );
   strategies.push_back( new RectangularCollisionStrategy );
@@ -80,38 +77,47 @@ Engine::Engine() :
 }
 
 void Engine::draw() const {
-  sky.draw();
-  city.draw();
-  land.draw();
-  for(auto sprite : dragonballs){
-  	sprite->draw();
-  }
-  for(auto sprite : sprites){
-    sprite->draw();
-  }
-  strategies[currentStrategy]->draw();
   SDL_Color textColor;
   textColor.r = Gamedata::getInstance().getXmlInt("font/red");
   textColor.g = Gamedata::getInstance().getXmlInt("font/green");
   textColor.b = Gamedata::getInstance().getXmlInt("font/blue");
   textColor.a = Gamedata::getInstance().getXmlInt("font/alpha");
   
-  IOmod::getInstance().writeText("Press m to change strategy", 500, 60, textColor);
-  if ( collision ) {
-    IOmod::getInstance().writeText("Oops: Collision", 500, 90, textColor);
+  sky.draw();
+  city.draw();
+  land.draw();
+
+  for(auto sprite : sprites){
+    sprite->draw();
   }
-  std::stringstream strm;
-  strm << dragonballs.size() << " Dragon Balls Remaining";
-  IOmod::getInstance().writeText(strm.str(), 500, 120, textColor);
+
+  for(auto sprite : dragonballs){
+  	sprite->draw();
+  }
+  if (dragonballs.size() > 0){
+    std::stringstream strm;
+    strm << dragonballs.size() << " Dragon Balls Remaining";
+    IOmod::getInstance().writeText(strm.str(), 500, 120, textColor);
+  }else{
+    SDL_Color textColor1;
+    textColor1.r = Gamedata::getInstance().getXmlInt("hud/border/Color/red");
+    textColor1.g = Gamedata::getInstance().getXmlInt("hud/border/Color/blue");
+    textColor1.b = Gamedata::getInstance().getXmlInt("hud/border/Color/green");
+    textColor1.a = Gamedata::getInstance().getXmlInt("hud/border/Color/alpha");
+  
+    IOmod::getInstance().writeText(" All 7 Dragon Balls Collected", 500, 120, textColor1);
+    IOmod::getInstance().writeText(" Summon Shendron", 500, 150, textColor1);
+  }
+
+  strategies[currentStrategy]->draw();
+  if ( collision ) {
+    IOmod::getInstance().writeText("Oops: Collision", 500, 60, textColor);
+  }
 
   player->draw();
-
   drawHud();
-
-  viewport.draw();
-  
+  viewport.draw();  
   SDL_RenderPresent(renderer);
-
 }
 
 void Engine::checkForCollisions() {
@@ -121,7 +127,7 @@ void Engine::checkForCollisions() {
       collision = true;
     }
   }
-  
+
   auto it = dragonballs.begin();
   while ( it != dragonballs.end() ) {
     if ( strategies[currentStrategy]->execute(*player, **it) ) {
