@@ -5,7 +5,7 @@
 # http://make.mad-scientist.net/papers/advanced-auto-dependency-generation/
 # Modified by Zack Sullivan
 
-CXX = clang++
+CXX = g++
 
 DEPDIR := .deps
 $(shell mkdir -p $(DEPDIR) >/dev/null)

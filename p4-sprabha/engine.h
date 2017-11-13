@@ -6,7 +6,10 @@
 #include "clock.h"
 #include "world.h"
 #include "viewport.h"
-#include "player.h"
+#include "smartSprite.h"
+
+class SubjectSprite;
+class CollisionStrategy;
 
 class Engine {
 public:
@@ -27,8 +30,12 @@ private:
   World city;
   World land;
 
-  // std::vector <Drawable*> sprites;
-  Player* sanji;
+  std::vector <SmartSprite*> dragonballs;
+  std::vector <Drawable*> sprites;
+  SubjectSprite* player;
+  std::vector<CollisionStrategy*> strategies;
+  int currentStrategy;
+  bool collision;
 
   Viewport& viewport;
   int currentSprite;

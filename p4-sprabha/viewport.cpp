@@ -25,16 +25,7 @@ void Viewport::setObjectToTrack(const Drawable *obj) {
 }
 
 void Viewport::draw() const {
-
-  SDL_Color textColor;
-  textColor.r = Gamedata::getInstance().getXmlInt("font/red");
-  textColor.g = Gamedata::getInstance().getXmlInt("font/green");
-  textColor.b = Gamedata::getInstance().getXmlInt("font/blue");
-  textColor.a = Gamedata::getInstance().getXmlInt("font/alpha");
-  IOmod::getInstance().
-    writeText("Tracking: "+objectToTrack->getName(), 30, 30, textColor);
-  
-  // SDL_Color textColor;
+  SDL_Color textColor;  
   textColor.r = Gamedata::getInstance().getXmlInt("namefont/red");
   textColor.g = Gamedata::getInstance().getXmlInt("namefont/green");
   textColor.b = Gamedata::getInstance().getXmlInt("namefont/blue");

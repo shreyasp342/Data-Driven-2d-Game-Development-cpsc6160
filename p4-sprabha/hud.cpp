@@ -3,8 +3,6 @@
 #include <sstream>
 #include <SDL.h>
 #include "hud.h"
-#include "gamedata.h"
-#include "ioMod.h"
 
 
 Hud& Hud::getInstance() {
@@ -15,6 +13,8 @@ Hud::Hud() :
   io( IOmod::getInstance() ),
   gdata( Gamedata::getInstance() ) {
 }
+
+Hud::~Hud(){}
 
 void Hud::draw(SDL_Renderer * const renderer){
   SDL_Rect box;
@@ -49,9 +49,11 @@ void Hud::draw(SDL_Renderer * const renderer){
   textColor.b = gdata.getXmlInt("hud/textColor/blue");
   textColor.a = gdata.getXmlInt("hud/textColor/alpha");
   io.writeText(gdata.getXmlStr("hud/text").c_str(), box.x+=15, box.y+=15, textColor);
-  io.writeText(gdata.getXmlStr("hud/w").c_str(), box.x, box.y+=30, textColor);
-  io.writeText(gdata.getXmlStr("hud/a").c_str(), box.x, box.y+=30, textColor);
-  io.writeText(gdata.getXmlStr("hud/d").c_str(), box.x, box.y+=30, textColor);
-  io.writeText(gdata.getXmlStr("hud/s").c_str(), box.x, box.y+=30, textColor);
+  io.writeText(gdata.getXmlStr("hud/up").c_str(), box.x, box.y+=30, textColor);
+  io.writeText(gdata.getXmlStr("hud/left").c_str(), box.x, box.y+=30, textColor);
+  io.writeText(gdata.getXmlStr("hud/right").c_str(), box.x, box.y+=30, textColor);
+  io.writeText(gdata.getXmlStr("hud/down").c_str(), box.x, box.y+=30, textColor);
+  io.writeText(gdata.getXmlStr("hud/collision").c_str(), box.x, box.y+=30, textColor);
+  io.writeText(gdata.getXmlStr("hud/hudshow").c_str(), box.x, box.y+=30, textColor);
 }
 

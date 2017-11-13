@@ -24,34 +24,32 @@ void Player::stop() {
 }
 
 void Player::right() { 
-  if ( getX() < worldWidth-getScaledWidth()) {
+  if ( getX() < worldWidth-getScaledWidth() +20) {
     setVelocityX(initialVelocity[0]);
     twowaySprite::images = twowaySprite::imagesRight;
   }
 } 
 void Player::left()  { 
-  if ( getX() > 0) {
+  if ( getX() > -30) {
     setVelocityX(-initialVelocity[0]);
     twowaySprite::images = twowaySprite::imagesLeft;
   }
 } 
 void Player::up()    { 
-  if ( getY() > 0) {
+  if ( getY() > -25) {
     setVelocityY( -initialVelocity[1] );
   }
 } 
 void Player::down()  { 
-  if ( getY() < worldHeight-getScaledHeight()) {
+  if ( getY() < worldHeight-getScaledHeight() +5) {
     setVelocityY( initialVelocity[1] );
   }
 }
 
 void Player::update(Uint32 ticks) {
-  if ( !collision ) advanceFrame(ticks);
-
-  Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
-  setPosition(getPosition() + incr);
-
-  stop();
+    advanceFrame(ticks);
+    Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+    setPosition(getPosition() + incr);
+    stop();
 }
 
