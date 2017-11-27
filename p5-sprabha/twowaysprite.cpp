@@ -1,6 +1,7 @@
 #include "twowaysprite.h"
 #include "gamedata.h"
 #include "renderContext.h"
+#include "explodingSprite.h"
 
 void twowaySprite::advanceFrame(Uint32 ticks) {
 	timeSinceLastFrame += ticks;
@@ -9,6 +10,8 @@ void twowaySprite::advanceFrame(Uint32 ticks) {
 		timeSinceLastFrame = 0;
 	}
 }
+
+twowaySprite::~twowaySprite( ) { if (explosion) delete explosion; }
 
 twowaySprite::twowaySprite( const std::string& name) :
   Drawable(name, 
@@ -20,6 +23,7 @@ twowaySprite::twowaySprite( const std::string& name) :
   imagesRight( RenderContext::getInstance()->getImages(name) ),
   imagesLeft( RenderContext::getInstance()->getImages(name+"Left") ),
   images( RenderContext::getInstance()->getImages(name) ),
+  explosion(nullptr),
 
   currentFrame(0),
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
@@ -34,6 +38,7 @@ twowaySprite::twowaySprite(const twowaySprite& s) :
   imagesRight(s.imagesRight),
   imagesLeft(s.imagesLeft),
   images(s.images),
+  explosion(s.explosion),
   currentFrame(s.currentFrame),
   numberOfFrames( s.numberOfFrames ),
   frameInterval( s.frameInterval ),
@@ -47,6 +52,7 @@ twowaySprite& twowaySprite::operator=(const twowaySprite& s) {
   imagesRight = (s.imagesRight);
   imagesLeft = (s.imagesLeft);
   images = (s.images);
+  explosion = s.explosion;
   currentFrame = (s.currentFrame);
   numberOfFrames = ( s.numberOfFrames );
   frameInterval = ( s.frameInterval );
@@ -56,11 +62,35 @@ twowaySprite& twowaySprite::operator=(const twowaySprite& s) {
   return *this;
 }
 
+void twowaySprite::explode() {
+  if ( !explosion ) {
+    Sprite 
+    sprite(getName(), getPosition(), getVelocity(), images[currentFrame]);
+    explosion = new ExplodingSprite(sprite);
+  }
+}
+
 void twowaySprite::draw() const { 
-  images[currentFrame]->draw(getX(), getY(), getScale());
+  if ( explosion ) explosion->draw();
+  else images[currentFrame]->draw(getX(), getY(), getScale());
 }
 
 void twowaySprite::update(Uint32 ticks) { 
+  if ( getX() < 0) {
+    images = imagesRight;
+  }
+  if ( getX() > worldWidth-getScaledWidth()) {
+    images = imagesLeft;
+  }  
+  if ( explosion ) {
+    explosion->update(ticks);
+    if ( explosion->chunkCount() == 0 ) {
+      delete explosion;
+      explosion = NULL;
+    }
+    return;
+  }
+
   advanceFrame(ticks);
 
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
@@ -75,10 +105,8 @@ void twowaySprite::update(Uint32 ticks) {
 
   if ( getX() < 0) {
     setVelocityX( fabs( getVelocityX() ) );
-    images = imagesRight;
   }
   if ( getX() > worldWidth-getScaledWidth()) {
     setVelocityX( -fabs( getVelocityX() ) );
-    images = imagesLeft;
   }  
 }

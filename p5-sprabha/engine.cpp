@@ -189,6 +189,11 @@ void Engine::play() {
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
         }
+        if ( keystate[SDL_SCANCODE_E] ) {
+          // sprites[1]->explode();
+          player->explode();
+          // dragonballs[0]->explode();
+        }
         if ( keystate[SDL_SCANCODE_M] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();
         }

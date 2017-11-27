@@ -64,6 +64,10 @@
   <speedY>150</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </Ball1>
 
 <Ball2>
@@ -73,6 +77,10 @@
   <speedY>150</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </Ball2>
 
 <Ball3>
@@ -82,6 +90,10 @@
   <speedY>150</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </Ball3>
 
 <Ball4>
@@ -91,6 +103,10 @@
   <speedY>150</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </Ball4>
 
 <Ball5>
@@ -100,6 +116,10 @@
   <speedY>150</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </Ball5>
 
 <Ball6>
@@ -109,6 +129,10 @@
   <speedY>150</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </Ball6>
 
 <Ball7>
@@ -118,6 +142,10 @@
   <speedY>150</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </Ball7>
 
 <valor>
@@ -130,6 +158,10 @@
   <speedX>150</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </valor>
 
 <cycle>
@@ -142,6 +174,10 @@
   <speedX>300</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </cycle>
 
 <cycleLeft>
@@ -154,6 +190,10 @@
   <speedX>300</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </cycleLeft>
 
 <goku>
@@ -166,6 +206,10 @@
   <speedX>250</speedX>
   <speedY>250</speedY>
   <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </goku>
 
 <gokuLeft>
@@ -178,6 +222,10 @@
   <speedX>250</speedX>
   <speedY>250</speedY>
   <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
 </gokuLeft>
 
 <hud>

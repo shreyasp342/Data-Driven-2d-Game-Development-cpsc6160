@@ -5,10 +5,13 @@
 #include <cmath>
 #include "drawable.h"
 
+class ExplodingSprite;
+
 class twowaySprite : public Drawable {
 public:
   twowaySprite(const std::string&);
   twowaySprite(const twowaySprite&);
+  ~twowaySprite();
 
   virtual void draw() const;
   virtual void update(Uint32 ticks);
@@ -26,10 +29,13 @@ public:
     return images[currentFrame]->getSurface();
   }
 
+  virtual void explode();
+
 protected:
   std::vector<Image *> imagesRight;
   std::vector<Image *> imagesLeft;
   std::vector<Image *> images;
+  ExplodingSprite* explosion;
 
   unsigned currentFrame;
   unsigned numberOfFrames;
