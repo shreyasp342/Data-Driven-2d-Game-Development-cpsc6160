@@ -198,6 +198,7 @@
 
 <goku>
   <file>assets/gokuRight.png</file>
+  <bullet>raybeam</bullet>
   <startLoc x="50" y="200"/>
   <frames>6</frames>
   <imageWidth>239</imageWidth>
@@ -214,6 +215,7 @@
 
 <gokuLeft>
   <file>assets/gokuLeft.png</file>
+  <bullet>raybeam</bullet>
   <startLoc x="50" y="200"/>
   <frames>6</frames>
   <imageWidth>239</imageWidth>

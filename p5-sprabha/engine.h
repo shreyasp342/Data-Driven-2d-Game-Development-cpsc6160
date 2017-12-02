@@ -38,8 +38,8 @@ private:
   bool collision;
 
   Viewport& viewport;
-  int currentSprite;
 
+  int currentSprite;
   bool makeVideo;
   bool showHud;
 

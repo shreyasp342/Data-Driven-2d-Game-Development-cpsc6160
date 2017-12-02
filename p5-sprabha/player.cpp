@@ -1,41 +1,23 @@
 #include "player.h"
 #include "explodingSprite.h"
 
-Player::~Player( ) { if (explosion) delete explosion; }
-
 Player::Player( const std::string& name) :
   twowaySprite(name),
   collision(false),
-  initialVelocity(getVelocity()),
-  explosion(nullptr)
+  initialVelocity(getVelocity())
 { }
 
 Player::Player(const Player& s) :
   twowaySprite(s), 
   collision(s.collision),
-  initialVelocity(s.getVelocity()),
-  explosion(s.explosion)
+  initialVelocity(s.getVelocity())
   { }
 
 Player& Player::operator=(const Player& s) {
   twowaySprite::operator=(s);
   collision = s.collision;
   initialVelocity = s.initialVelocity;
-  explosion = s.explosion;
   return *this;
-}
-
-void Player::explode() {
-  if ( !explosion ) {
-    Sprite 
-    sprite(getName(), getPosition(), getVelocity(), images[currentFrame]);
-    explosion = new ExplodingSprite(sprite);
-  }
-}
-
-void Player::draw() const { 
-  if ( explosion ) explosion->draw();
-  else images[currentFrame]->draw(getX(), getY(), getScale());
 }
 
 void Player::stop() { 
@@ -66,18 +48,11 @@ void Player::down()  {
 }
 
 void Player::update(Uint32 ticks) {
-  if ( explosion ) {
-    explosion->update(ticks);
-    if ( explosion->chunkCount() == 0 ) {
-      delete explosion;
-      explosion = NULL;
-    }
-    return;
-  }
+  twowaySprite::update(ticks);
 
-    advanceFrame(ticks);
-    Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
-    setPosition(getPosition() + incr);
-    stop();
+  advanceFrame(ticks);
+  Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+  setPosition(getPosition() + incr);
+  stop();
 }
 

@@ -190,9 +190,16 @@ void Engine::play() {
           else clock.pause();
         }
         if ( keystate[SDL_SCANCODE_E] ) {
-          // sprites[1]->explode();
+          for(unsigned int i = 0; i< sprites.size();i++){
+            sprites[i]->explode();
+          }
+          for(unsigned int i = 0; i< dragonballs.size();i++){
+            dragonballs[i]->explode();
+          }
           player->explode();
-          // dragonballs[0]->explode();
+        }
+        if ( keystate[SDL_SCANCODE_SPACE] ) {
+          static_cast<ShootingSprite*>(player)->shoot();
         }
         if ( keystate[SDL_SCANCODE_M] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();
