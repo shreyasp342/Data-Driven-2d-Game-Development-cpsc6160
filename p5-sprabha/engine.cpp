@@ -16,6 +16,7 @@
 #include "player.h"
 #include "hud.h"
 #include "collisionStrategy.h"
+#include "shootingSprite.h"
 
 Engine::~Engine() { 
   for(auto sprite : dragonballs){
@@ -42,7 +43,7 @@ Engine::Engine() :
   land("land", Gamedata::getInstance().getXmlInt("land/factor") ),
   dragonballs(),
   sprites(),
-  player(new SubjectSprite("goku")),
+  player(new ShootingSprite("goku")),
   strategies(),
   currentStrategy(0),
   collision(false),
@@ -86,27 +87,26 @@ void Engine::draw() const {
   sky.draw();
   city.draw();
   land.draw();
-
   for(auto sprite : sprites){
     sprite->draw();
   }
-
   for(auto sprite : dragonballs){
-  	sprite->draw();
+    if ( !(sprite->exploded()) ) sprite->draw();
   }
+  player->draw();
+
   if (dragonballs.size() > 0){
     std::stringstream strm;
     strm << dragonballs.size() << " Dragon Balls Remaining";
     IOmod::getInstance().writeText(strm.str(), 500, 120, textColor);
-  }else{
+  } else {
     SDL_Color textColor1;
     textColor1.r = Gamedata::getInstance().getXmlInt("hud/border/Color/red");
     textColor1.g = Gamedata::getInstance().getXmlInt("hud/border/Color/blue");
     textColor1.b = Gamedata::getInstance().getXmlInt("hud/border/Color/green");
     textColor1.a = Gamedata::getInstance().getXmlInt("hud/border/Color/alpha");
-  
-    IOmod::getInstance().writeText(" All 7 Dragon Balls Collected", 500, 120, textColor1);
-    IOmod::getInstance().writeText(" Summon Shendron", 500, 150, textColor1);
+    IOmod::getInstance().writeText(" All 7 Dragon Balls Collected", 250, 120, textColor1);
+    IOmod::getInstance().writeText(" Summon Shendron", 250, 150, textColor1);
   }
 
   strategies[currentStrategy]->draw();
@@ -114,7 +114,6 @@ void Engine::draw() const {
     IOmod::getInstance().writeText("Oops: Collision", 500, 60, textColor);
   }
 
-  player->draw();
   drawHud();
   viewport.draw();  
   SDL_RenderPresent(renderer);
@@ -128,9 +127,28 @@ void Engine::checkForCollisions() {
     }
   }
 
+  if ( strategies[currentStrategy]->execute(*sprites[0], *player) ) {
+    collision = true;
+    player->explode();
+  }
+  for ( const auto d : player->getBullets() ) {
+    if ( strategies[currentStrategy]->execute(*sprites[1], d) ) {
+      collision = true;
+      sprites[1]->explode();
+    }
+  }
+
   auto it = dragonballs.begin();
   while ( it != dragonballs.end() ) {
     if ( strategies[currentStrategy]->execute(*player, **it) ) {
+      (*it)->explode();
+      it++;
+    }
+    else ++it;
+  }
+  it = dragonballs.begin();
+  while ( it != dragonballs.end() ) {
+    if ( (*it)->exploded() ) {
       SmartSprite* doa = *it;
       player->detach(doa);
       delete doa;
@@ -138,6 +156,7 @@ void Engine::checkForCollisions() {
     }
     else ++it;
   }
+
   if ( collision ) {
     player->collided();
   }
@@ -163,8 +182,13 @@ void Engine::update(Uint32 ticks) {
 }
 
 void Engine::drawHud() const {
+  unsigned int freelistSize = player->getFreeList();
+  unsigned int bulletlistSize = player->getBulletList();
+  
   if (showHud || clock.getSeconds() <= 3){
   	Hud::getInstance().draw(renderer);
+    Hud::getInstance().drawPool(renderer, bulletlistSize, freelistSize);
+
   }
  }
 
@@ -189,17 +213,8 @@ void Engine::play() {
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
         }
-        if ( keystate[SDL_SCANCODE_E] ) {
-          for(unsigned int i = 0; i< sprites.size();i++){
-            sprites[i]->explode();
-          }
-          for(unsigned int i = 0; i< dragonballs.size();i++){
-            dragonballs[i]->explode();
-          }
-          player->explode();
-        }
         if ( keystate[SDL_SCANCODE_SPACE] ) {
-          static_cast<ShootingSprite*>(player)->shoot();
+            player->shoot();
         }
         if ( keystate[SDL_SCANCODE_M] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();

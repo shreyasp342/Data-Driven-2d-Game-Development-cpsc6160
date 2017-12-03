@@ -137,6 +137,8 @@
 
 <Ball7>
   <file>assets/ball7.png</file>
+  <interval>300</interval>
+  <distance>420</distance>
   <startLoc x="1750" y="540"/>
   <speedX>150</speedX>
   <speedY>150</speedY>
@@ -147,6 +149,21 @@
     <distance>200</distance>
   </chunk>
 </Ball7>
+
+<energyBall>
+  <file>assets/energyball.png</file>
+  <interval>300</interval>
+  <distance>420</distance>
+  <startLoc x="1750" y="540"/>
+  <speedX>450</speedX>
+  <speedY>450</speedY>
+  <transparency>false</transparency>
+  <safeDistance>150</safeDistance>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</energyBall>
 
 <valor>
   <file>assets/valor.png</file>
@@ -198,39 +215,45 @@
 
 <goku>
   <file>assets/gokuRight.png</file>
-  <bullet>raybeam</bullet>
+  <bullet>energyBall</bullet>
   <startLoc x="50" y="200"/>
   <frames>6</frames>
   <imageWidth>239</imageWidth>
   <imageHeight>200</imageHeight>
   <frameInterval>90</frameInterval>
-  <speedX>250</speedX>
-  <speedY>250</speedY>
+  <speedX>200</speedX>
+  <speedY>200</speedY>
   <transparency>true</transparency>
   <chunk>
-    <size>9</size>
-    <distance>200</distance>
+    <size>25</size>
+    <distance>150</distance>
   </chunk>
 </goku>
 
 <gokuLeft>
   <file>assets/gokuLeft.png</file>
-  <bullet>raybeam</bullet>
+  <bullet>Ball7</bullet>
   <startLoc x="50" y="200"/>
   <frames>6</frames>
   <imageWidth>239</imageWidth>
   <imageHeight>200</imageHeight>
   <frameInterval>90</frameInterval>
-  <speedX>250</speedX>
-  <speedY>250</speedY>
+  <speedX>200</speedX>
+  <speedY>200</speedY>
   <transparency>true</transparency>
   <chunk>
-    <size>9</size>
-    <distance>200</distance>
+    <size>25</size>
+    <distance>150</distance>
   </chunk>
 </gokuLeft>
 
 <hud>
+  <Pool>
+    <posX>660</posX>
+    <posY>360</posY>
+    <width>165</width>
+    <height>80</height>
+  </Pool>
   <posX>20</posX>
   <posY>20</posY>
   <width>280</width>
@@ -262,7 +285,7 @@
   <down> s -> DOWN</down>
   <right> d -> RIGHT</right>
   <collision> m -> collision strategy</collision>
-  <hudshow> F1 -> Display Hud</hudshow>
+  <hudshow> SPACE -> shoot</hudshow>
 </hud>
 
 </GameData>

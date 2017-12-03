@@ -1,6 +1,7 @@
 #include <cmath>
 #include <random>
 #include <functional>
+#include <iostream>
 #include "sprite.h"
 #include "gamedata.h"
 #include "renderContext.h"
@@ -22,6 +23,7 @@ Sprite::Sprite(const string& n, const Vector2f& pos, const Vector2f& vel,
   Drawable(n, pos, vel), 
   image( img ),
   explosion(nullptr),
+  checkExplode(false),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
 { }
@@ -36,6 +38,7 @@ Sprite::Sprite(const std::string& name) :
            ),
   image( RenderContext::getInstance()->getImage(name) ),
   explosion(nullptr),
+  checkExplode(false),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
 { }
@@ -44,6 +47,7 @@ Sprite::Sprite(const Sprite& s) :
   Drawable(s), 
   image(s.image),
   explosion(s.explosion),
+  checkExplode(s.checkExplode),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
 { }
@@ -52,6 +56,7 @@ Sprite& Sprite::operator=(const Sprite& rhs) {
   Drawable::operator=( rhs );
   image = rhs.image;
   explosion = rhs.explosion;
+  checkExplode = rhs.checkExplode,
   worldWidth = rhs.worldWidth;
   worldHeight = rhs.worldHeight;
   return *this;
@@ -74,9 +79,10 @@ void Sprite::draw() const {
 void Sprite::update(Uint32 ticks) { 
   if ( explosion ) {
     explosion->update(ticks);
-    if ( explosion->chunkCount() == 0 ) {
+    if ( explosion->chunkCount() <= 30 ) {
       delete explosion;
       explosion = NULL;
+      checkExplode = true;
     }
     return;
   }

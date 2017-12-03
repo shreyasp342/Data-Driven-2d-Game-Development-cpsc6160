@@ -1,22 +1,24 @@
 #include "player.h"
-#include "explodingSprite.h"
 
 Player::Player( const std::string& name) :
   twowaySprite(name),
   collision(false),
-  initialVelocity(getVelocity())
+  initialVelocity(getVelocity()),
+  facing(RIGHT)
 { }
 
 Player::Player(const Player& s) :
   twowaySprite(s), 
   collision(s.collision),
-  initialVelocity(s.getVelocity())
+  initialVelocity(s.getVelocity()),
+  facing(s.facing)
   { }
 
 Player& Player::operator=(const Player& s) {
   twowaySprite::operator=(s);
   collision = s.collision;
   initialVelocity = s.initialVelocity;
+  facing = s.facing;
   return *this;
 }
 
@@ -25,15 +27,17 @@ void Player::stop() {
 }
 
 void Player::right() { 
-  if ( getX() < worldWidth-getScaledWidth() +20) {
+  if ( getX() < worldWidth-getScaledWidth() - 20) {
     setVelocityX(initialVelocity[0]);
-    images = imagesRight;
+    twowaySprite::images = twowaySprite::imagesRight;
+    facing = RIGHT;
   }
 } 
 void Player::left()  { 
-  if ( getX() > -30) {
+  if ( getX() > 20) {
     setVelocityX(-initialVelocity[0]);
-    images = imagesLeft;
+    twowaySprite::images = twowaySprite::imagesLeft;
+    facing = LEFT;
   }
 } 
 void Player::up()    { 
@@ -48,11 +52,11 @@ void Player::down()  {
 }
 
 void Player::update(Uint32 ticks) {
-  twowaySprite::update(ticks);
+    advanceFrame(ticks);
+    twowaySprite::update(ticks);
 
-  advanceFrame(ticks);
-  Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
-  setPosition(getPosition() + incr);
-  stop();
+    Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+    setPosition(getPosition() + incr);
+    stop();
 }
 

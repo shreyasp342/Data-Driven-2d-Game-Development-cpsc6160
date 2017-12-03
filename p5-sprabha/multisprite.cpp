@@ -72,7 +72,7 @@ void MultiSprite::draw() const {
 void MultiSprite::update(Uint32 ticks) { 
   if ( explosion ) {
     explosion->update(ticks);
-    if ( explosion->chunkCount() == 0 ) {
+    if ( explosion->chunkCount() <= 35 ) {
       delete explosion;
       explosion = NULL;
     }

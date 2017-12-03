@@ -4,25 +4,26 @@ Course: CPSC 6160
 
 Clemson Email Address: sprabha@clemson.edu
 
-Project no: 4
+Project no: 5
 
-Project due date: October 20 2017
+Project due date: December 3 2017
 
-Project description: Adding a Player, Display HUD, Collision Detection and AI
+Project description: Object Pooling, Explosions, and Projectiles
 
-The easiest part of this project: Everything was pretty strainght forward. 
+The easiest part of this project: Creating an explosion using the chunking example.
 
 Problems that I had in completing this project: 
-1. Getting the Goku flying on Nimbus sprite. I ended up getting a gif from web, extract the frames from the gif and then create a sprite sheet from it.
-2. Creating HUD was little time consuming.
-3. The sprite class was bounded within the (0,worldWidth) and (0,worldHeight). And the smartSprite class inherits this sprite class. But when the smartSprite (dragonBall) is within the safe distance from the player, the smartSprite kept going out of bounds. I think it  used to go till (0-safeDistance,worldWidth+safeDistance) and (0-safeDistance,worldHeight+safeDistance).
+1. When I try to explode both the sprites/characters when collided, the chunks created also trigger explosion as soon as the character re-appers.
+2. Struggled a bit when trying to explode the sprite after the energy ball collides with it. I was trying to call the detach and delete immediately after calling the explode function, not giving enough time of the animation to take place. So, I ended up using a flag to delete the sprite after the explosion animation is completed.
+3. Struggled with implementing shooting and pooling. It took me a lot of time to implement them. Struggled a bit with the hierachy.
 
-Possible Final Project:
-I plan to have a game built around the original dragon ball series. In this game, I intend to have kid goku on his nimbus goes on a dragon ball hunting quest. There are 7 dragon balls in all. I plan to have some obstacles along the way( Still haven't decided what they are going to be). The dragon balls are located far apart from each other. The game finishes when Kid Goku collects all 7 dragon ball. Maybe have an animation where Shendron comes when the game ends.
+Project Explaination:
+Goku on Nimbus, is trying to collect all the 7 dragonballs. The dragon balls are smartsprites trying to get away from Goku. The dragon balls explodes when goku collects it. The dragonballs count reduces after all the chunks of the dragon ball disappears. The player (Goku) explodes when he colloides with valor (moltres) and reappears again after the explosion animation. Pressing F1 brings up 2 HUDs - 1. The information HUD and 2. The object pooling HUD which shows the size of free list and bullet list. The projectiles are energy balls. When the spacebar is pressed, Goku shoots energy balls. These energy balls when collided with the bicycle triggers the explosion of bicycle. 
 
 Sources:
 1. cycleleft.png and cycleright.png- My project 2 image. Generated two different images of bicycle with variations in pedals and wheel.
 2. ball1.png, ball2.png, ball3.png, ball4.png, ball5.png, ball6.png, ball7.png - extracted frames and resized from gif http://vignette3.wikia.nocookie.net/dragonball/images/6/63/Dragon_Balls_.png/revision/latest/scale-to-width-down/2000?cb=20120225164126
+3. energyball.png - https://vignette.wikia.nocookie.net/narutofanon/images/e/e2/Lightningballc.png/revision/latest?cb=20150630121734
 3. valor.png - extracted frames and resized from gif - https://i.imgur.com/rnJ4vaO.gif
 4. gokuLeft.png gokuRight.png - extracted frames from gif - https://media.giphy.com/media/egtmRUZfUCnNm/200.gif
 5. sky.png, city.png and land.png - Used 'city' from the zip file downloaded from http://spritedatabase.net/file/20596/Backgrounds

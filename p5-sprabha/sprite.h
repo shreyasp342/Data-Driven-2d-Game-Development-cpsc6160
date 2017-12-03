@@ -25,10 +25,12 @@ public:
   int getScaledHeight() const { return getScale()*image->getHeight(); } 
 
   virtual void explode();
+  bool exploded() const { return checkExplode; }
 
 private:
   const Image * image;
   ExplodingSprite* explosion;
+  bool checkExplode;
 
 protected:
   int worldWidth;

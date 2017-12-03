@@ -4,11 +4,11 @@
 #include "explodingSprite.h"
 
 void twowaySprite::advanceFrame(Uint32 ticks) {
-	timeSinceLastFrame += ticks;
-	if (timeSinceLastFrame > frameInterval) {
+  timeSinceLastFrame += ticks;
+  if (timeSinceLastFrame > frameInterval) {
     currentFrame = (currentFrame+1) % numberOfFrames;
-		timeSinceLastFrame = 0;
-	}
+    timeSinceLastFrame = 0;
+  }
 }
 
 twowaySprite::~twowaySprite( ) { if (explosion) delete explosion; }

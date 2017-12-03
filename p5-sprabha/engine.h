@@ -7,8 +7,10 @@
 #include "world.h"
 #include "viewport.h"
 #include "smartSprite.h"
+// #include "shootingSprite.h"
 
-class SubjectSprite;
+// class SubjectSprite;
+class ShootingSprite;
 class CollisionStrategy;
 
 class Engine {
@@ -32,16 +34,18 @@ private:
 
   std::vector <SmartSprite*> dragonballs;
   std::vector <Drawable*> sprites;
-  SubjectSprite* player;
+  // SubjectSprite* player;
+  ShootingSprite* player;
   std::vector<CollisionStrategy*> strategies;
   int currentStrategy;
   bool collision;
 
   Viewport& viewport;
-
   int currentSprite;
+
   bool makeVideo;
   bool showHud;
+  // bool shoot;
 
   void draw() const;
   void drawHud() const;

@@ -18,8 +18,12 @@ public:
   void up();
   void down();
   void stop();
+
+  enum FACE {LEFT, RIGHT};
+  FACE getPlayerDirection() const { return facing; }
 private:
   bool collision;
   Vector2f initialVelocity;
+  FACE facing;
 };
 #endif
