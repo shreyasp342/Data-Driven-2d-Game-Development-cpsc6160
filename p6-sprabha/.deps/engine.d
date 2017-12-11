@@ -21,11 +21,10 @@ build/engine.o: engine.cpp smartSprite.h sprite.h drawable.h \
  /usr/include/SDL2/SDL_power.h /usr/include/SDL2/SDL_render.h \
  /usr/include/SDL2/SDL_system.h /usr/include/SDL2/SDL_timer.h \
  /usr/include/SDL2/SDL_version.h vector2f.h image.h subjectSprite.h \
- player.h twowaysprite.h multisprite.h gamedata.h parseXML.h engine.h \
- ioMod.h /usr/include/SDL2/SDL_ttf.h /usr/include/SDL2/SDL.h \
- renderContext.h imageFactory.h spriteSheet.h clock.h world.h viewport.h \
- sound.h frameGenerator.h hud.h collisionStrategy.h shootingSprite.h \
- bullet.h
+ player.h multisprite.h gamedata.h parseXML.h engine.h ioMod.h \
+ /usr/include/SDL2/SDL_ttf.h /usr/include/SDL2/SDL.h renderContext.h \
+ imageFactory.h spriteSheet.h clock.h world.h viewport.h frameGenerator.h \
+ hud.h collisionStrategy.h shootingSprite.h bullet.h
 
 smartSprite.h:
 
@@ -127,8 +126,6 @@ subjectSprite.h:
 
 player.h:
 
-twowaysprite.h:
-
 multisprite.h:
 
 gamedata.h:
@@ -154,8 +151,6 @@ clock.h:
 world.h:
 
 viewport.h:
-
-sound.h:
 
 frameGenerator.h:
 

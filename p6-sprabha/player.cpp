@@ -1,21 +1,34 @@
 #include "player.h"
+#include "renderContext.h"
 
 Player::Player( const std::string& name) :
-  twowaySprite(name),
+  MultiSprite(name),
+  imagesRight( RenderContext::getInstance()->getImages(name) ),
+  imagesLeft( RenderContext::getInstance()->getImages(name+"Left") ),
   collision(false),
   initialVelocity(getVelocity()),
   facing(RIGHT)
-{ }
+  {
+    MultiSprite::images = imagesRight;
+  }
 
 Player::Player(const Player& s) :
-  twowaySprite(s), 
+  MultiSprite(s), 
+  imagesRight(s.imagesRight),
+  imagesLeft(s.imagesLeft),
+  // images(s.images),
   collision(s.collision),
   initialVelocity(s.getVelocity()),
   facing(s.facing)
-  { }
+  { 
+    MultiSprite::images = imagesRight;
+  }
 
 Player& Player::operator=(const Player& s) {
-  twowaySprite::operator=(s);
+  MultiSprite::operator=(s);
+  imagesRight = (s.imagesRight);
+  imagesLeft = (s.imagesLeft);
+    MultiSprite::images = imagesRight;
   collision = s.collision;
   initialVelocity = s.initialVelocity;
   facing = s.facing;
@@ -29,14 +42,14 @@ void Player::stop() {
 void Player::right() { 
   if ( getX() < worldWidth-getScaledWidth() - 20) {
     setVelocityX(initialVelocity[0]);
-    twowaySprite::images = twowaySprite::imagesRight;
+    MultiSprite::images = imagesRight;
     facing = RIGHT;
   }
 } 
 void Player::left()  { 
   if ( getX() > 20) {
     setVelocityX(-initialVelocity[0]);
-    twowaySprite::images = twowaySprite::imagesLeft;
+    MultiSprite::images = imagesLeft;
     facing = LEFT;
   }
 } 
@@ -53,7 +66,7 @@ void Player::down()  {
 
 void Player::update(Uint32 ticks) {
     advanceFrame(ticks);
-    twowaySprite::update(ticks);
+    MultiSprite::update(ticks);
 
     Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
     setPosition(getPosition() + incr);

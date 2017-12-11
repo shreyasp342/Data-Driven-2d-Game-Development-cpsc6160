@@ -1,9 +1,10 @@
 #ifndef PLAYER__H
 #define PLAYER__H
 
-#include "twowaysprite.h"
+#include "multisprite.h"
+#include "drawable.h"
 
-class Player : public twowaySprite {
+class Player : public MultiSprite {
 public:
   Player(const std::string&);
   Player(const Player&);
@@ -21,6 +22,11 @@ public:
 
   enum FACE {LEFT, RIGHT};
   FACE getPlayerDirection() const { return facing; }
+
+protected:
+  std::vector<Image *> imagesRight;
+  std::vector<Image *> imagesLeft;
+  
 private:
   bool collision;
   Vector2f initialVelocity;

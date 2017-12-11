@@ -21,7 +21,7 @@ build/shootingSprite.o: shootingSprite.cpp shootingSprite.h sprite.h \
  /usr/include/SDL2/SDL_power.h /usr/include/SDL2/SDL_render.h \
  /usr/include/SDL2/SDL_system.h /usr/include/SDL2/SDL_timer.h \
  /usr/include/SDL2/SDL_version.h vector2f.h image.h bullet.h gamedata.h \
- parseXML.h subjectSprite.h player.h twowaysprite.h
+ parseXML.h subjectSprite.h player.h multisprite.h
 
 shootingSprite.h:
 
@@ -129,4 +129,4 @@ subjectSprite.h:
 
 player.h:
 
-twowaysprite.h:
+multisprite.h:

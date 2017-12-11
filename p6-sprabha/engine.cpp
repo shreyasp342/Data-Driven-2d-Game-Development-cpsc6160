@@ -9,7 +9,7 @@
 #include "subjectSprite.h"
 #include "sprite.h"
 #include "multisprite.h"
-#include "twowaysprite.h"
+// #include "twowaysprite.h"
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
@@ -38,7 +38,6 @@ Engine::Engine() :
   io( IOmod::getInstance() ),
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
-  sound(),
   sky("sky", Gamedata::getInstance().getXmlInt("sky/factor") ),
   city("city", Gamedata::getInstance().getXmlInt("city/factor") ),
   land("land", Gamedata::getInstance().getXmlInt("land/factor") ),
@@ -68,7 +67,7 @@ Engine::Engine() :
   }
 
   sprites.push_back(new MultiSprite("valor"));
-  sprites.push_back(new twowaySprite("cycle"));
+  // sprites.push_back(new twowaySprite("cycle"));
   
   strategies.push_back( new PerPixelCollisionStrategy );
   strategies.push_back( new RectangularCollisionStrategy );
@@ -131,7 +130,6 @@ void Engine::checkForCollisions() {
   if ( strategies[currentStrategy]->execute(*sprites[0], *player) ) {
     collision = true;
     player->explode();
-    sound[0];
   }
   for ( const auto d : player->getBullets() ) {
     if ( strategies[currentStrategy]->execute(*sprites[1], d) ) {
@@ -216,8 +214,8 @@ bool Engine::play() {
           else clock.pause();
         }
         if ( keystate[SDL_SCANCODE_R] ) {
-            clock.unpause();
-            return true;
+          clock.unpause();
+          return true;
         }
         if ( keystate[SDL_SCANCODE_SPACE] ) {
             player->shoot();

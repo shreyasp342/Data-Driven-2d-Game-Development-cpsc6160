@@ -7,7 +7,6 @@
 #include "world.h"
 #include "viewport.h"
 #include "smartSprite.h"
-#include "sound.h"
 // #include "shootingSprite.h"
 
 // class SubjectSprite;
@@ -29,7 +28,6 @@ private:
   Clock& clock;
 
   SDL_Renderer * const renderer;
-  SDLSound sound;
   World sky;
   World city;
   World land;
@@ -48,7 +46,6 @@ private:
   bool makeVideo;
   bool showHud;
   // bool shoot;
-
 
   void draw() const;
   void drawHud() const;
