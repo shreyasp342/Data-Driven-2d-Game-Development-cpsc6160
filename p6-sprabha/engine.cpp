@@ -38,6 +38,7 @@ Engine::Engine() :
   io( IOmod::getInstance() ),
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
+  sound(),
   sky("sky", Gamedata::getInstance().getXmlInt("sky/factor") ),
   city("city", Gamedata::getInstance().getXmlInt("city/factor") ),
   land("land", Gamedata::getInstance().getXmlInt("land/factor") ),
@@ -130,6 +131,7 @@ void Engine::checkForCollisions() {
   if ( strategies[currentStrategy]->execute(*sprites[0], *player) ) {
     collision = true;
     player->explode();
+    sound[0];
   }
   for ( const auto d : player->getBullets() ) {
     if ( strategies[currentStrategy]->execute(*sprites[1], d) ) {
@@ -192,7 +194,7 @@ void Engine::drawHud() const {
   }
  }
 
-void Engine::play() {
+bool Engine::play() {
   SDL_Event event;
   const Uint8* keystate;
   bool done = false;
@@ -212,6 +214,10 @@ void Engine::play() {
         if ( keystate[SDL_SCANCODE_P] ) {
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
+        }
+        if ( keystate[SDL_SCANCODE_R] ) {
+            clock.unpause();
+            return true;
         }
         if ( keystate[SDL_SCANCODE_SPACE] ) {
             player->shoot();
@@ -259,4 +265,5 @@ void Engine::play() {
       }
     }
   }
+  return false;
 }
