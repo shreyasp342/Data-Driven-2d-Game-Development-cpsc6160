@@ -41,6 +41,7 @@ Engine::Engine() :
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
   sky("sky", Gamedata::getInstance().getXmlInt("sky/factor") ),
+  sky2("sky2", Gamedata::getInstance().getXmlInt("sky2/factor") ),
   city("city", Gamedata::getInstance().getXmlInt("city/factor") ),
   land("land", Gamedata::getInstance().getXmlInt("land/factor") ),
   dragonballs(),
@@ -70,15 +71,19 @@ Engine::Engine() :
     player->attach( dragonballs[i] );
   }
 
-  sprites.push_back(new MultiSprite("valor"));
+
+  for (unsigned int i = 0; i < 5; ++i) {
+    sprites.push_back(new MultiSprite("valor"));
+  }
+  // sprites.push_back(new MultiSprite("valor"));
   // sprites.push_back(new twowaySprite("cycle"));
   // sprites.push_back(new EnemyShooting("cycle"));
   // std::cout << dragonballs[0]->getName() << std::endl;
   // collected.push_back(dragonballs[0]->getName());
   // std::cout << collected[0] << std::endl;
-
-  strategies.push_back( new PerPixelCollisionStrategy );
+  
   strategies.push_back( new RectangularCollisionStrategy );
+  strategies.push_back( new PerPixelCollisionStrategy );
   strategies.push_back( new MidPointCollisionStrategy );
 
   // Viewport::getInstance().setObjectToTrack(player);
@@ -94,6 +99,9 @@ void Engine::draw() const {
   textColor.a = Gamedata::getInstance().getXmlInt("font/alpha");
   
   sky.draw();
+  if (dragonballs.size() <= 0){
+    sky2.draw();
+  }
   city.draw();
   land.draw();
   for(auto sprite : sprites){
@@ -103,6 +111,7 @@ void Engine::draw() const {
     if ( !(sprite->exploded()) ) sprite->draw();
   }
   player->draw();
+  player->setObstruct(collected.size());
   enemy->draw();
 
 
@@ -111,15 +120,6 @@ void Engine::draw() const {
     int y = Gamedata::getInstance().getXmlInt(ball+"/collected/y"); 
     IOmod::getInstance().writeImage(ball, x, y);
   }
-  // IOmod::getInstance().writeImage(collected[0], 900, 20);
-  // std::cout << collected[0] << std::endl;
-  // IOmod::getInstance().writeImage("Ball1", 900, 20);
-  // IOmod::getInstance().writeImage("Ball2", 860, 40);
-  // IOmod::getInstance().writeImage("Ball3", 860, 80);
-  // IOmod::getInstance().writeImage("Ball4", 900, 60);
-  // IOmod::getInstance().writeImage("Ball5", 900, 100);
-  // IOmod::getInstance().writeImage("Ball6", 940, 80);
-  // IOmod::getInstance().writeImage("Ball7", 940, 40);
 
   if (dragonballs.size() > 0){
     std::stringstream strm;
@@ -152,12 +152,12 @@ void Engine::checkForCollisions() {
       collision = true;
     }
   }
-    if ( strategies[currentStrategy]->execute(*player, *enemy) ) {
-      collision = true;
-      player->up();  
-      // dragonballs.push_back( new SmartSprite("Ball1", pos, w, h) );
 
-    }
+  if ( strategies[currentStrategy]->execute(*player, *enemy) ) {
+    collision = true;
+    player->up();  
+    // dragonballs.push_back( new SmartSprite("Ball1", pos, w, h) );
+  }
 
   if ( strategies[currentStrategy]->execute(*sprites[0], *player) ) {
     collision = true;
@@ -171,19 +171,19 @@ void Engine::checkForCollisions() {
   }
 
   auto it = dragonballs.begin();
-  while ( it != dragonballs.end() ) {
-    if ( strategies[currentStrategy]->execute(*player, **it) ) {
-      (*it)->explode();
-      it++;
-    }
-    else ++it;
-  }
-  it = dragonballs.begin();
+  // while ( it != dragonballs.end() ) {
+  //   if ( strategies[currentStrategy]->execute(*player, **it) ) {
+  //     (*it)->explode();
+  //     it++;
+  //   }
+  //   else ++it;
+  // }
+  // it = dragonballs.begin();
   while ( it != dragonballs.end() ) {
     // if ( (*it)->exploded() ) {
     if ( strategies[currentStrategy]->execute(*player, **it) ) {
       collected.push_back((*it)->getName());
-      std::cout << (*it)->getName() << std::endl;
+      // std::cout << (*it)->getName() << std::endl;
       SmartSprite* doa = *it;
       player->detach(doa);
       delete doa;

@@ -31,6 +31,7 @@ private:
 
   SDL_Renderer * const renderer;
   World sky;
+  World sky2;
   World city;
   World land;
 
@@ -56,4 +57,6 @@ private:
   void update(Uint32);
   void printScales() const;
   void checkForCollisions();
+  
+
 };

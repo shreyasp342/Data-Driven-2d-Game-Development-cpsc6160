@@ -17,7 +17,7 @@
 </view>
 
 <world>
-  <width>4900</width>
+  <width>5520</width>
   <height>600</height>
 </world>
 
@@ -26,6 +26,11 @@
   <factor>2</factor>
   <transparency>false</transparency>
 </sky>
+<sky2>
+  <file>assets/sky2.png</file>
+  <factor>2</factor>
+  <transparency>false</transparency>
+</sky2>
 
 <city>
   <file>assets/city.png</file>
@@ -160,7 +165,7 @@
 <energyBall>
   <file>assets/energyball.png</file>
   <interval>300</interval>
-  <distance>420</distance>
+  <distance>600</distance>
   <startLoc x="1750" y="540"/>
   <speedX>450</speedX>
   <speedY>450</speedY>
@@ -191,7 +196,7 @@
 <cycle>
   <file>assets/cycleright.png</file>
   <bullet>energyBall</bullet>
-  <startLoc x="550" y="410"/>
+  <startLoc x="3900" y="410"/>
   <frames>2</frames>
   <imageWidth>160</imageWidth>
   <imageHeight>120</imageHeight>
@@ -208,7 +213,7 @@
 <cycleLeft>
   <file>assets/cycleleft.png</file>
   <bullet>energyBall</bullet>
-  <startLoc x="50" y="410"/>
+  <startLoc x="3900" y="410"/>
   <frames>2</frames>
   <imageWidth>160</imageWidth>
   <imageHeight>120</imageHeight>

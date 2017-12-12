@@ -20,7 +20,7 @@ Viewport::Viewport() :
 
 void Viewport::setObjectToTrack(const Drawable *obj) { 
   objectToTrack = obj; 
-  objWidth = objectToTrack->getScaledWidth();
+  objWidth = objectToTrack->getScaledWidth() + 550;
   objHeight = objectToTrack->getScaledHeight();
 }
 
@@ -44,7 +44,7 @@ void Viewport::update() {
   if (position[0] < 0) position[0] = 0;
   if (position[1] < 0) position[1] = 0;
   if (position[0] > (worldWidth - viewWidth)) {
-    position[0] = worldWidth-viewWidth;
+    position[0] = worldWidth-viewWidth-250;
   }
   if (position[1] > (worldHeight - viewHeight)) {
     position[1] = worldHeight-viewHeight;
