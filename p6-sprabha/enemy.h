@@ -7,6 +7,7 @@
 class Enemy : public MultiSprite {
 public:
   Enemy(const std::string&);
+  Enemy(const std::string&, int, int, int, int);
   Enemy(const Enemy&);
   virtual void update(Uint32 ticks);
 

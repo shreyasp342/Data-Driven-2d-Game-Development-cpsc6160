@@ -20,6 +20,7 @@ public:
   void down();
   void stop();
   void setObstruct(const int);
+  int getLimiter() const { return limiter; }
 
   enum FACE {LEFT, RIGHT};
   FACE getPlayerDirection() const { return facing; }
@@ -32,7 +33,7 @@ private:
   bool collision;
   Vector2f initialVelocity;
   FACE facing;
-  int obstruct;
+  // int obstruct;
   int limiter;
 };
 #endif

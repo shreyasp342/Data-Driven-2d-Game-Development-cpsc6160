@@ -10,6 +10,7 @@
 class EnemyShooting : public Enemy {
 public:
   EnemyShooting(const std::string& n);
+  EnemyShooting(const std::string& n, int, int, int, int);
   EnemyShooting(const EnemyShooting& s);
 
   virtual void update(Uint32 ticks);

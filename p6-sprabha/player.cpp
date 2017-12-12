@@ -8,7 +8,7 @@ Player::Player( const std::string& name) :
   collision(false),
   initialVelocity(getVelocity()),
   facing(RIGHT),
-  obstruct(0),
+  // obstruct(0),
   limiter(400)
   {
     MultiSprite::images = imagesRight;
@@ -22,7 +22,7 @@ Player::Player(const Player& s) :
   collision(s.collision),
   initialVelocity(s.getVelocity()),
   facing(s.facing),
-  obstruct(s.obstruct),
+  // obstruct(s.obstruct),
   limiter(400)
   { 
     MultiSprite::images = imagesRight;
@@ -36,7 +36,7 @@ Player& Player::operator=(const Player& s) {
   collision = s.collision;
   initialVelocity = s.initialVelocity;
   facing = s.facing;
-  obstruct = s.obstruct;
+  // obstruct = s.obstruct;
   limiter = s.limiter;
   return *this;
 }
@@ -70,8 +70,20 @@ void Player::down()  {
   }
 }
 
-void Player::setObstruct(const int x){
-  obstruct = x;
+void Player::setObstruct(const int obstruct){
+  // obstruct = x;
+  switch(obstruct){
+      case 0: std::cout << obstruct << 0 << std::endl; limiter = 400; break;
+      case 1: std::cout << obstruct << 1 << std::endl; limiter = 1050; break;
+      case 2: std::cout << obstruct << 2 << std::endl; limiter = 1700; break;
+      case 3: std::cout << obstruct << 3 << std::endl; limiter = 2350; break;
+      case 4: std::cout << obstruct << 4 << std::endl; limiter = 3000; break;
+      case 5: std::cout << obstruct << 5 << std::endl; limiter = 3650; break;
+      case 6: std::cout << obstruct << 6 << std::endl; limiter = 4300; break;
+      case 7: std::cout << obstruct << 7 << std::endl; limiter = 4500; break;
+      // case 7: std::cout << obstruct << 7 << std::endl; limiter = 4500; break;
+      default: std::cout << obstruct << 8 << std::endl; limiter = 4500; break;
+    }
 }
 
 void Player::update(Uint32 ticks) {
@@ -79,19 +91,8 @@ void Player::update(Uint32 ticks) {
     MultiSprite::update(ticks);
 
     Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
-    switch(obstruct){
-      // case 0: std::cout << obstruct << 0 << std::endl; limiter = 400; break;
-      case 0: std::cout << obstruct << 1 << std::endl; limiter = 1050; break;
-      case 1: std::cout << obstruct << 2 << std::endl; limiter = 1700; break;
-      case 2: std::cout << obstruct << 3 << std::endl; limiter = 2350; break;
-      case 3: std::cout << obstruct << 4 << std::endl; limiter = 3000; break;
-      case 4: std::cout << obstruct << 5 << std::endl; limiter = 3650; break;
-      case 5: std::cout << obstruct << 6 << std::endl; limiter = 4300; break;
-      case 6: std::cout << obstruct << 7 << std::endl; limiter = 4500; break;
-      case 7: std::cout << obstruct << 7 << std::endl; limiter = 4500; break;
-      default: std::cout << obstruct << 8 << std::endl; limiter = 4500; break;
-    }
-    std::cout << obstruct << ", " << limiter << ", " << getX() << std::endl;;
+    
+    // std::cout << obstruct << ", " << limiter << ", " << getX() << std::endl;;
     if(getX() > limiter){
       setX(limiter);
     }

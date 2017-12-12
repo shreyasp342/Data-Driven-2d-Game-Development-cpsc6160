@@ -5,6 +5,7 @@
 #include <random>
 #include <iomanip>
 #include <vector>
+#include <ctime>
 #include "smartSprite.h"
 #include "subjectSprite.h"
 #include "sprite.h"
@@ -49,14 +50,20 @@ Engine::Engine() :
   collected(),
   player(new ShootingSprite("goku")),
   enemy(new EnemyShooting("cycle")),
+  enemies(),
   strategies(),
   currentStrategy(0),
   collision(false),
   viewport( Viewport::getInstance() ),
   currentSprite(0),
   makeVideo( false ),
-  showHud( false ),sound()
+  showHud( false ),
+  sound(),
+  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
+  worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
+  counter(0)
 {
+  srand(time(0));
   Vector2f pos = player->getPosition();
   int w = player->getScaledWidth();
   int h = player->getScaledHeight();
@@ -71,9 +78,32 @@ Engine::Engine() :
     player->attach( dragonballs[i] );
   }
 
+  std::cout << "Limiter: " << player->getLimiter() << std:: endl;
 
   for (unsigned int i = 0; i < 5; ++i) {
-    sprites.push_back(new MultiSprite("valor"));
+    std::string name = "cycle";
+    int px = player->getLimiter() + 200;
+    int py = rand()%worldHeight;
+    // int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y");
+    int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
+    if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+    int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
+    if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+    std::cout << px << ", " << py << ", " << vx << ", " << vy << ", " << rand()%2 << std::endl;
+    enemies.push_back(new EnemyShooting(name.c_str(), px, py, vx, vy));
+  }
+
+  for (unsigned int i = 0; i < 5; ++i) {
+    std::string name = "valor";
+    int px = rand()%worldWidth * (rand()%2?1:-1);
+    // int y = rand()%worldHeight;
+    int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y");
+    int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
+    if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+    int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
+    if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+    // std::cout << px << ", " << py << ", " << vx << ", " << vy << ", " << rand()%2 << std::endl;
+    sprites.push_back(new MultiSprite(name.c_str(), px, py, vx, vy));
   }
   // sprites.push_back(new MultiSprite("valor"));
   // sprites.push_back(new twowaySprite("cycle"));
@@ -82,8 +112,8 @@ Engine::Engine() :
   // collected.push_back(dragonballs[0]->getName());
   // std::cout << collected[0] << std::endl;
   
-  strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new PerPixelCollisionStrategy );
+  strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new MidPointCollisionStrategy );
 
   // Viewport::getInstance().setObjectToTrack(player);
@@ -111,9 +141,23 @@ void Engine::draw() const {
     if ( !(sprite->exploded()) ) sprite->draw();
   }
   player->draw();
-  player->setObstruct(collected.size());
+  // player->setObstruct(collected.size());
   enemy->draw();
-
+  for(auto sprite : enemies){
+    if ( !(sprite->exploded()) ) sprite->draw();
+  }
+  // auto it = enemies.begin();
+  // while ( it != enemies.end() ) {
+  //   if ( (*it)->exploded() ) {
+  //     delete (*it);
+  //     it = enemies.erase(it);
+  //   }
+  //   else{
+  //     (*it)->draw();
+  //     ++it;
+  //   } 
+  // }
+  std::cout << enemies.size() << std::endl;
 
   for(auto ball : collected){ 
     int x = Gamedata::getInstance().getXmlInt(ball+"/collected/x");
@@ -153,20 +197,35 @@ void Engine::checkForCollisions() {
     }
   }
 
-  if ( strategies[currentStrategy]->execute(*player, *enemy) ) {
-    collision = true;
-    player->up();  
-    // dragonballs.push_back( new SmartSprite("Ball1", pos, w, h) );
-  }
+  // if ( strategies[currentStrategy]->execute(*player, *enemy) ) {
+  //   collision = true;
+  //   player->up();  
+  //   // dragonballs.push_back( new SmartSprite("Ball1", pos, w, h) );
+  // }
 
   if ( strategies[currentStrategy]->execute(*sprites[0], *player) ) {
     collision = true;
     player->explode();
   }
+  // for ( const auto d : player->getBullets() ) {
+  //   if ( strategies[currentStrategy]->execute(*sprites[0], d) ) {
+  //     collision = true;
+  //     sprites[0]->explode();
+  //   }
+  // }
   for ( const auto d : player->getBullets() ) {
-    if ( strategies[currentStrategy]->execute(*sprites[0], d) ) {
-      collision = true;
-      sprites[0]->explode();
+    auto it = enemies.begin();
+    while ( it != enemies.end() ) {
+      // if ( (*it)->exploded() ) {
+      //   delete (*it);
+      //   it = enemies.erase(it);
+      // } 
+      // else if ( strategies[currentStrategy]->execute(d, **it) ) {
+      if ( strategies[currentStrategy]->execute(d, **it) ) {
+        (*it)->explode();
+        it++;
+      }
+      else ++it;
     }
   }
 
@@ -202,18 +261,67 @@ void Engine::checkForCollisions() {
 }
 
 void Engine::update(Uint32 ticks) {
-  checkForCollisions();
+    std::cout << counter << ", " << player->getLimiter() << std::endl;
+  if(enemies.size()<=0){
+    player->setObstruct(++counter);
+    std::cout << counter << ", " << player->getLimiter() << std::endl;
+    for (unsigned int i = 0; i < 5; ++i) {
+      std::string name = "cycle";
+      int px = player->getLimiter() + 200;
+      int py = rand()%worldHeight;
+      // int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y");
+      int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
+      if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+      int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
+      if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+      std::cout << px << ", " << py << ", " << vx << ", " << vy << ", " << rand()%2 << std::endl;
+      enemies.push_back(new EnemyShooting(name.c_str(), px, py, vx, vy));
+    }
+  }
+  // player->update(ticks);
+  // if(enemies.size()<=0){
+  //   player->setObstruct(++counter);
+  //   std::cout << counter << ", " << player->getLimiter() << std::endl;
+  //   for (unsigned int i = 0; i < 5; ++i) {
+  //     std::string name = "cycle";
+  //     int px = player->getLimiter() + 200;
+  //     int py = rand()%worldHeight;
+  //     // int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y");
+  //     int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
+  //     if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+  //     int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
+  //     if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+  //     std::cout << px << ", " << py << ", " << vx << ", " << vy << ", " << rand()%2 << std::endl;
+  //     enemies.push_back(new EnemyShooting(name.c_str(), px, py, vx, vy));
+  //   }
+  // }
+
+  auto it = enemies.begin();
+  while ( it != enemies.end() ) {
+    if ( (*it)->exploded() ) {
+      delete (*it);
+      it = enemies.erase(it);
+    }
+    else{
+      (*it)->update(ticks);
+      ++it;
+    } 
+  }
   for(auto sprite : dragonballs){
   	sprite->update(ticks);
   }
   for(auto sprite : sprites){
     sprite->update(ticks);
   }
+  // for(auto sprite : enemies){
+  //   sprite->update(ticks);
+  // }
+  player->update(ticks);
+  enemy->update(ticks);
+  checkForCollisions();
   sky.update();
   city.update();
   land.update();
-  player->update(ticks);
-  enemy->update(ticks);
   viewport.update(); // always update viewport last
 }
 

@@ -40,6 +40,7 @@ private:
   std::vector <std::string> collected;
   ShootingSprite* player;
   EnemyShooting* enemy;
+  std::vector <EnemyShooting*> enemies;
   std::vector<CollisionStrategy*> strategies;
   int currentStrategy;
   bool collision;
@@ -57,6 +58,10 @@ private:
   void update(Uint32);
   void printScales() const;
   void checkForCollisions();
+
+  int worldWidth;
+  int worldHeight;
+  int counter;
   
 
 };

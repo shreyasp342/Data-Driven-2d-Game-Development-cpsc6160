@@ -11,6 +11,16 @@ EnemyShooting::EnemyShooting(const std::string& name) :
   timeSinceLastFrame(0)
 { }
 
+EnemyShooting::EnemyShooting(const std::string& name, int px, int py, int vx, int vy) :
+  Enemy(name, px, py, vx, vy),
+  bulletName( Gamedata::getInstance().getXmlStr(name+"/bullet") ),
+  bullets(),
+  freelist(),
+  minSpeed( Gamedata::getInstance().getXmlInt(bulletName+"/speedX") ),
+  bulletInterval(Gamedata::getInstance().getXmlInt(bulletName+"/interval")),
+  timeSinceLastFrame(0)
+{ }
+
 EnemyShooting::EnemyShooting(const EnemyShooting& s) :
   Enemy(s),
   bulletName(s.bulletName),

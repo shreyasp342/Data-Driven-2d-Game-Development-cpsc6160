@@ -10,6 +10,7 @@ class ExplodingSprite;
 class MultiSprite : public Drawable {
 public:
   MultiSprite(const std::string&);
+  MultiSprite(const std::string&, int, int, int, int);
   MultiSprite(const MultiSprite&);
   ~MultiSprite();
 
@@ -30,6 +31,7 @@ public:
   }
 
   virtual void explode();
+  bool exploded() const { return checkExplode; }
 
 protected:
   std::vector<Image *> images;
@@ -41,6 +43,7 @@ protected:
   float timeSinceLastFrame;
   int worldWidth;
   int worldHeight;
+  bool checkExplode;
 
   void advanceFrame(Uint32 ticks);
   MultiSprite& operator=(const MultiSprite&);

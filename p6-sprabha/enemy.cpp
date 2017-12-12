@@ -13,6 +13,18 @@ Enemy::Enemy( const std::string& name) :
     MultiSprite::images = imagesRight;
   }
 
+Enemy::Enemy( const std::string& name, int px, int py, int vx, int vy) :
+  MultiSprite(name, px, py, vx, vy),
+  imagesRight( RenderContext::getInstance()->getImages(name) ),
+  imagesLeft( RenderContext::getInstance()->getImages(name+"Left") ),
+  collision(false),
+  initialVelocity(getVelocity()),
+  initialX(getX()),
+  facing(RIGHT)
+  {
+    MultiSprite::images = imagesRight;
+  }
+
 Enemy::Enemy(const Enemy& s) :
   MultiSprite(s), 
   imagesRight(s.imagesRight),

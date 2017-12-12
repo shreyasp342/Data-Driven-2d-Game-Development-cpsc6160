@@ -22,6 +22,21 @@ MultiSprite::MultiSprite( const std::string& name) :
            ),
   images( RenderContext::getInstance()->getImages(name) ),
   explosion(nullptr),
+  checkExplode(false),
+
+  currentFrame(0),
+  numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
+  frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval")),
+  timeSinceLastFrame( 0 ),
+  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
+  worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
+{ }
+
+MultiSprite::MultiSprite( const std::string& name, int px, int py, int vx, int vy) :
+  Drawable(name, Vector2f(px, py), Vector2f(vx, vy)),
+  images( RenderContext::getInstance()->getImages(name) ),
+  explosion(nullptr),
+  checkExplode(false),
 
   currentFrame(0),
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
@@ -35,6 +50,7 @@ MultiSprite::MultiSprite(const MultiSprite& s) :
   Drawable(s), 
   images(s.images),
   explosion(s.explosion),
+  checkExplode(s.checkExplode),
   currentFrame(s.currentFrame),
   numberOfFrames( s.numberOfFrames ),
   frameInterval( s.frameInterval ),
@@ -47,6 +63,7 @@ MultiSprite& MultiSprite::operator=(const MultiSprite& s) {
   Drawable::operator=(s);
   images = (s.images);
   explosion = s.explosion;
+  checkExplode = s.checkExplode;
   currentFrame = (s.currentFrame);
   numberOfFrames = ( s.numberOfFrames );
   frameInterval = ( s.frameInterval );
@@ -75,6 +92,7 @@ void MultiSprite::update(Uint32 ticks) {
     if ( explosion->chunkCount() <= 35 ) {
       delete explosion;
       explosion = NULL;
+      checkExplode = true;
     }
     return;
   }
