@@ -28,7 +28,7 @@ Player& Player::operator=(const Player& s) {
   MultiSprite::operator=(s);
   imagesRight = (s.imagesRight);
   imagesLeft = (s.imagesLeft);
-    MultiSprite::images = imagesRight;
+  MultiSprite::images = imagesRight;
   collision = s.collision;
   initialVelocity = s.initialVelocity;
   facing = s.facing;
@@ -69,6 +69,9 @@ void Player::update(Uint32 ticks) {
     MultiSprite::update(ticks);
 
     Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+    // if(getX() > 400){
+    //   setX(400);
+    // }
     setPosition(getPosition() + incr);
     stop();
 }

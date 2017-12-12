@@ -7,6 +7,7 @@ Enemy::Enemy( const std::string& name) :
   imagesLeft( RenderContext::getInstance()->getImages(name+"Left") ),
   collision(false),
   initialVelocity(getVelocity()),
+  initialX(getX()),
   facing(RIGHT)
   {
     MultiSprite::images = imagesRight;
@@ -19,6 +20,7 @@ Enemy::Enemy(const Enemy& s) :
   // images(s.images),
   collision(s.collision),
   initialVelocity(s.getVelocity()),
+  initialX(s.getX()),
   facing(s.facing)
   { 
     MultiSprite::images = imagesRight;
@@ -31,6 +33,7 @@ Enemy& Enemy::operator=(const Enemy& s) {
   MultiSprite::images = imagesRight;
   collision = s.collision;
   initialVelocity = s.initialVelocity;
+  initialX = s.initialX;
   facing = s.facing;
   return *this;
 }
@@ -71,11 +74,11 @@ void Enemy::update(Uint32 ticks) {
     Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
     setPosition(getPosition() + incr);
     // stop();
-    if ( getX() < 500) {
+    if ( getX() < initialX - 200) {
     setVelocityX( fabs( getVelocityX() ) );
     MultiSprite::images = imagesRight;
   }
-  if ( getX() > 700) {
+  if ( getX() > initialX + 200) {
     setVelocityX( -fabs( getVelocityX() ) );
     MultiSprite::images = imagesLeft;
   }

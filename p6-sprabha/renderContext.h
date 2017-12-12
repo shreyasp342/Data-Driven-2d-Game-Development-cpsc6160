@@ -2,8 +2,8 @@
 #include <SDL.h>
 #include "imageFactory.h"
 
-const int WIDTH = 1024;
-const int HEIGHT = 600;
+const int WIDTH = 854;
+const int HEIGHT = 480;
 const int DELAY = 1000;
 
 class RenderContext{

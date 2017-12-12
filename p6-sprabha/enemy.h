@@ -30,6 +30,7 @@ protected:
 private:
   bool collision;
   Vector2f initialVelocity;
+  float initialX;
   FACE facing;
 };
 #endif

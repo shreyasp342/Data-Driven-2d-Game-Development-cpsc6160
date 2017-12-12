@@ -62,3 +62,17 @@ void IOmod::writeText(const std::string& msg, int x, int y, SDL_Color textColor)
   SDL_RenderCopy(renderer, texture, NULL, &dst);
   SDL_DestroyTexture(texture);
 }
+
+void IOmod::writeImage(const std::string& name, int x, int y)const {
+  SDL_Surface* surface = SDL_LoadBMP(Gamedata::getInstance().getXmlStr(name+"/file").c_str());
+
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+  
+  int imageWidth = surface->w;
+  int imageHeight = surface->h;
+  SDL_FreeSurface(surface);
+  SDL_Rect dst = {x, y, imageWidth, imageHeight};
+  
+  SDL_RenderCopy(renderer, texture, NULL, &dst);
+    SDL_DestroyTexture(texture);
+}

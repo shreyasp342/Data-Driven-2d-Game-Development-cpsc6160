@@ -31,5 +31,6 @@ private:
   bool collision;
   Vector2f initialVelocity;
   FACE facing;
+  bool obstruct = false;
 };
 #endif

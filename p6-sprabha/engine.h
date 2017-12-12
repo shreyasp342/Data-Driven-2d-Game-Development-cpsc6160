@@ -36,6 +36,7 @@ private:
 
   std::vector <SmartSprite*> dragonballs;
   std::vector <Drawable*> sprites;
+  std::vector <std::string> collected;
   ShootingSprite* player;
   EnemyShooting* enemy;
   std::vector<CollisionStrategy*> strategies;

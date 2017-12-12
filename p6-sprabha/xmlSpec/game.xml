@@ -58,8 +58,9 @@
 </namefont>
 
 <Ball1>
-  <file>assets/ball1.png</file>
+  <file>assets/ball1.bmp</file>
   <startLoc x="650" y="540"/>
+  <collected x="900" y="20"/>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>false</transparency>
@@ -71,8 +72,9 @@
 </Ball1>
 
 <Ball2>
-  <file>assets/ball2.png</file>
+  <file>assets/ball2.bmp</file>
   <startLoc x="1300" y="540"/>
+  <collected x="860" y="40"/>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>false</transparency>
@@ -84,8 +86,9 @@
 </Ball2>
 
 <Ball3>
-  <file>assets/ball3.png</file>
+  <file>assets/ball3.bmp</file>
   <startLoc x="1950" y="540"/>
+  <collected x="860" y="80"/>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>false</transparency>
@@ -97,8 +100,9 @@
 </Ball3>
 
 <Ball4>
-  <file>assets/ball4.png</file>
-  <startLoc x="2600" y="540"/>
+  <file>assets/ball4.bmp</file>
+  <startLoc x="4550" y="540"/>
+  <collected x="900" y="60"/>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>false</transparency>
@@ -110,8 +114,9 @@
 </Ball4>
 
 <Ball5>
-  <file>assets/ball5.png</file>
-  <startLoc x="3250" y="540"/>
+  <file>assets/ball5.bmp</file>
+  <startLoc x="2600" y="540"/>
+  <collected x="900" y="100"/>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>false</transparency>
@@ -123,8 +128,9 @@
 </Ball5>
 
 <Ball6>
-  <file>assets/ball6.png</file>
-  <startLoc x="3900" y="540"/>
+  <file>assets/ball6.bmp</file>
+  <startLoc x="3250" y="540"/>
+  <collected x="940" y="80"/>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>false</transparency>
@@ -136,10 +142,11 @@
 </Ball6>
 
 <Ball7>
-  <file>assets/ball7.png</file>
+  <file>assets/ball7.bmp</file><!-- 
   <interval>300</interval>
-  <distance>420</distance>
-  <startLoc x="4550" y="540"/>
+  <distance>420</distance> -->
+  <startLoc x="3900" y="540"/>
+  <collected x="940" y="40"/>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>false</transparency>

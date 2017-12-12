@@ -30,6 +30,7 @@ Engine::~Engine() {
   for ( CollisionStrategy* strategy : strategies ) {
     delete strategy;
   }
+  delete enemy;
 
   std::cout << "Terminating program" << std::endl;
 }
@@ -44,6 +45,7 @@ Engine::Engine() :
   land("land", Gamedata::getInstance().getXmlInt("land/factor") ),
   dragonballs(),
   sprites(),
+  collected(),
   player(new ShootingSprite("goku")),
   enemy(new EnemyShooting("cycle")),
   strategies(),
@@ -71,7 +73,10 @@ Engine::Engine() :
   sprites.push_back(new MultiSprite("valor"));
   // sprites.push_back(new twowaySprite("cycle"));
   // sprites.push_back(new EnemyShooting("cycle"));
-  
+  // std::cout << dragonballs[0]->getName() << std::endl;
+  // collected.push_back(dragonballs[0]->getName());
+  // std::cout << collected[0] << std::endl;
+
   strategies.push_back( new PerPixelCollisionStrategy );
   strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new MidPointCollisionStrategy );
@@ -99,6 +104,22 @@ void Engine::draw() const {
   }
   player->draw();
   enemy->draw();
+
+
+  for(auto ball : collected){ 
+    int x = Gamedata::getInstance().getXmlInt(ball+"/collected/x");
+    int y = Gamedata::getInstance().getXmlInt(ball+"/collected/y"); 
+    IOmod::getInstance().writeImage(ball, x, y);
+  }
+  // IOmod::getInstance().writeImage(collected[0], 900, 20);
+  // std::cout << collected[0] << std::endl;
+  // IOmod::getInstance().writeImage("Ball1", 900, 20);
+  // IOmod::getInstance().writeImage("Ball2", 860, 40);
+  // IOmod::getInstance().writeImage("Ball3", 860, 80);
+  // IOmod::getInstance().writeImage("Ball4", 900, 60);
+  // IOmod::getInstance().writeImage("Ball5", 900, 100);
+  // IOmod::getInstance().writeImage("Ball6", 940, 80);
+  // IOmod::getInstance().writeImage("Ball7", 940, 40);
 
   if (dragonballs.size() > 0){
     std::stringstream strm;
@@ -159,7 +180,10 @@ void Engine::checkForCollisions() {
   }
   it = dragonballs.begin();
   while ( it != dragonballs.end() ) {
-    if ( (*it)->exploded() ) {
+    // if ( (*it)->exploded() ) {
+    if ( strategies[currentStrategy]->execute(*player, **it) ) {
+      collected.push_back((*it)->getName());
+      std::cout << (*it)->getName() << std::endl;
       SmartSprite* doa = *it;
       player->detach(doa);
       delete doa;
