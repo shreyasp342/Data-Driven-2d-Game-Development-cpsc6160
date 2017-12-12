@@ -2,7 +2,7 @@
 <GameData>
 <!-- screenTitle is also used to identify you and your animation. 
      So make sure to include your name as part of the screenTitle -->
-<title>The Tracker Framework</title>
+<title>DragonBall Hunt</title>
 <maxStringSize>50</maxStringSize>
 
 <frameCapOn>true</frameCapOn>
@@ -12,12 +12,12 @@
 <username>sprabha</username>
 
 <view>
-  <width>854</width>
-  <height>480</height>
+  <width>1024</width>
+  <height>600</height>
 </view>
 
 <world>
-  <width>2048</width>
+  <width>4900</width>
   <height>600</height>
 </world>
 
@@ -59,9 +59,9 @@
 
 <Ball1>
   <file>assets/ball1.png</file>
-  <startLoc x="250" y="540"/>
-  <speedX>150</speedX>
-  <speedY>150</speedY>
+  <startLoc x="650" y="540"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
   <chunk>
@@ -72,9 +72,9 @@
 
 <Ball2>
   <file>assets/ball2.png</file>
-  <startLoc x="500" y="540"/>
-  <speedX>150</speedX>
-  <speedY>150</speedY>
+  <startLoc x="1300" y="540"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
   <chunk>
@@ -85,9 +85,9 @@
 
 <Ball3>
   <file>assets/ball3.png</file>
-  <startLoc x="750" y="540"/>
-  <speedX>150</speedX>
-  <speedY>150</speedY>
+  <startLoc x="1950" y="540"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
   <chunk>
@@ -98,9 +98,9 @@
 
 <Ball4>
   <file>assets/ball4.png</file>
-  <startLoc x="1000" y="540"/>
-  <speedX>150</speedX>
-  <speedY>150</speedY>
+  <startLoc x="2600" y="540"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
   <chunk>
@@ -111,9 +111,9 @@
 
 <Ball5>
   <file>assets/ball5.png</file>
-  <startLoc x="1250" y="540"/>
-  <speedX>150</speedX>
-  <speedY>150</speedY>
+  <startLoc x="3250" y="540"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
   <chunk>
@@ -124,9 +124,9 @@
 
 <Ball6>
   <file>assets/ball6.png</file>
-  <startLoc x="1500" y="540"/>
-  <speedX>150</speedX>
-  <speedY>150</speedY>
+  <startLoc x="3900" y="540"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
   <chunk>
@@ -139,9 +139,9 @@
   <file>assets/ball7.png</file>
   <interval>300</interval>
   <distance>420</distance>
-  <startLoc x="1750" y="540"/>
-  <speedX>150</speedX>
-  <speedY>150</speedY>
+  <startLoc x="4550" y="540"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
   <transparency>false</transparency>
   <safeDistance>150</safeDistance>
   <chunk>
@@ -183,13 +183,14 @@
 
 <cycle>
   <file>assets/cycleright.png</file>
-  <startLoc x="50" y="410"/>
+  <bullet>energyBall</bullet>
+  <startLoc x="550" y="410"/>
   <frames>2</frames>
   <imageWidth>160</imageWidth>
   <imageHeight>120</imageHeight>
   <frameInterval>80</frameInterval>
-  <speedX>300</speedX>
-  <speedY>0</speedY>
+  <speedX>25</speedX>
+  <speedY>100</speedY>
   <transparency>true</transparency>
   <chunk>
     <size>9</size>
@@ -199,6 +200,7 @@
 
 <cycleLeft>
   <file>assets/cycleleft.png</file>
+  <bullet>energyBall</bullet>
   <startLoc x="50" y="410"/>
   <frames>2</frames>
   <imageWidth>160</imageWidth>
@@ -232,7 +234,7 @@
 
 <gokuLeft>
   <file>assets/gokuLeft.png</file>
-  <bullet>Ball7</bullet>
+  <bullet>energyBall</bullet>
   <startLoc x="50" y="200"/>
   <frames>6</frames>
   <imageWidth>239</imageWidth>

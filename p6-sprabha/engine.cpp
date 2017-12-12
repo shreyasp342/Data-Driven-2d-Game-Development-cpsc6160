@@ -17,6 +17,7 @@
 #include "hud.h"
 #include "collisionStrategy.h"
 #include "shootingSprite.h"
+#include "enemyshooting.h"
 
 Engine::~Engine() { 
   for(auto sprite : dragonballs){
@@ -44,13 +45,14 @@ Engine::Engine() :
   dragonballs(),
   sprites(),
   player(new ShootingSprite("goku")),
+  enemy(new EnemyShooting("cycle")),
   strategies(),
   currentStrategy(0),
   collision(false),
   viewport( Viewport::getInstance() ),
   currentSprite(0),
   makeVideo( false ),
-  showHud( false )
+  showHud( false ),sound()
 {
   Vector2f pos = player->getPosition();
   int w = player->getScaledWidth();
@@ -68,11 +70,13 @@ Engine::Engine() :
 
   sprites.push_back(new MultiSprite("valor"));
   // sprites.push_back(new twowaySprite("cycle"));
+  // sprites.push_back(new EnemyShooting("cycle"));
   
   strategies.push_back( new PerPixelCollisionStrategy );
   strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new MidPointCollisionStrategy );
 
+  // Viewport::getInstance().setObjectToTrack(player);
   Viewport::getInstance().setObjectToTrack(player);
   std::cout << "Loading complete" << std::endl;
 }
@@ -94,6 +98,7 @@ void Engine::draw() const {
     if ( !(sprite->exploded()) ) sprite->draw();
   }
   player->draw();
+  enemy->draw();
 
   if (dragonballs.size() > 0){
     std::stringstream strm;
@@ -126,15 +131,21 @@ void Engine::checkForCollisions() {
       collision = true;
     }
   }
+    if ( strategies[currentStrategy]->execute(*player, *enemy) ) {
+      collision = true;
+      player->up();  
+      // dragonballs.push_back( new SmartSprite("Ball1", pos, w, h) );
+
+    }
 
   if ( strategies[currentStrategy]->execute(*sprites[0], *player) ) {
     collision = true;
     player->explode();
   }
   for ( const auto d : player->getBullets() ) {
-    if ( strategies[currentStrategy]->execute(*sprites[1], d) ) {
+    if ( strategies[currentStrategy]->execute(*sprites[0], d) ) {
       collision = true;
-      sprites[1]->explode();
+      sprites[0]->explode();
     }
   }
 
@@ -178,6 +189,7 @@ void Engine::update(Uint32 ticks) {
   city.update();
   land.update();
   player->update(ticks);
+  enemy->update(ticks);
   viewport.update(); // always update viewport last
 }
 
@@ -219,6 +231,9 @@ bool Engine::play() {
         }
         if ( keystate[SDL_SCANCODE_SPACE] ) {
             player->shoot();
+        }
+        if ( keystate[SDL_SCANCODE_B] ) {
+            enemy->shoot();
         }
         if ( keystate[SDL_SCANCODE_M] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();

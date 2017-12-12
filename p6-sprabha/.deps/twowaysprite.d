@@ -1,4 +1,4 @@
-build/engine.o: engine.cpp smartSprite.h sprite.h drawable.h \
+build/twowaysprite.o: twowaysprite.cpp twowaysprite.h drawable.h \
  /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
  /usr/include/SDL2/SDL_stdinc.h /usr/include/SDL2/SDL_config.h \
  /usr/include/SDL2/SDL_platform.h /usr/include/SDL2/begin_code.h \
@@ -20,16 +20,11 @@ build/engine.o: engine.cpp smartSprite.h sprite.h drawable.h \
  /usr/include/SDL2/SDL_log.h /usr/include/SDL2/SDL_messagebox.h \
  /usr/include/SDL2/SDL_power.h /usr/include/SDL2/SDL_render.h \
  /usr/include/SDL2/SDL_system.h /usr/include/SDL2/SDL_timer.h \
- /usr/include/SDL2/SDL_version.h vector2f.h image.h subjectSprite.h \
- player.h multisprite.h gamedata.h parseXML.h engine.h ioMod.h \
- /usr/include/SDL2/SDL_ttf.h /usr/include/SDL2/SDL.h renderContext.h \
- imageFactory.h spriteSheet.h clock.h world.h viewport.h sound.h \
- frameGenerator.h hud.h collisionStrategy.h shootingSprite.h bullet.h \
- enemyshooting.h enemy.h
+ /usr/include/SDL2/SDL_version.h vector2f.h image.h gamedata.h parseXML.h \
+ renderContext.h imageFactory.h spriteSheet.h explodingSprite.h chunk.h \
+ sprite.h
 
-smartSprite.h:
-
-sprite.h:
+twowaysprite.h:
 
 drawable.h:
 
@@ -123,23 +118,9 @@ vector2f.h:
 
 image.h:
 
-subjectSprite.h:
-
-player.h:
-
-multisprite.h:
-
 gamedata.h:
 
 parseXML.h:
-
-engine.h:
-
-ioMod.h:
-
-/usr/include/SDL2/SDL_ttf.h:
-
-/usr/include/SDL2/SDL.h:
 
 renderContext.h:
 
@@ -147,24 +128,8 @@ imageFactory.h:
 
 spriteSheet.h:
 
-clock.h:
+explodingSprite.h:
 
-world.h:
+chunk.h:
 
-viewport.h:
-
-sound.h:
-
-frameGenerator.h:
-
-hud.h:
-
-collisionStrategy.h:
-
-shootingSprite.h:
-
-bullet.h:
-
-enemyshooting.h:
-
-enemy.h:
+sprite.h:

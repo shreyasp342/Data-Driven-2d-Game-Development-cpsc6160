@@ -7,10 +7,12 @@
 #include "world.h"
 #include "viewport.h"
 #include "smartSprite.h"
+#include "sound.h"
 // #include "shootingSprite.h"
 
 // class SubjectSprite;
 class ShootingSprite;
+class EnemyShooting;
 class CollisionStrategy;
 
 class Engine {
@@ -34,8 +36,8 @@ private:
 
   std::vector <SmartSprite*> dragonballs;
   std::vector <Drawable*> sprites;
-  // SubjectSprite* player;
   ShootingSprite* player;
+  EnemyShooting* enemy;
   std::vector<CollisionStrategy*> strategies;
   int currentStrategy;
   bool collision;
@@ -45,6 +47,7 @@ private:
 
   bool makeVideo;
   bool showHud;
+  SDLSound sound;
   // bool shoot;
 
   void draw() const;

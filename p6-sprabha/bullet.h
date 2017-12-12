@@ -1,3 +1,6 @@
+#ifndef BULLET__H
+#define BULLET__H
+
 #include <iostream>
 #include "sprite.h"
 #include "gamedata.h"
@@ -22,3 +25,6 @@ private:
   float maxDistance;
   bool tooFar;
 };
+
+#endif
+
