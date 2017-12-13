@@ -8,7 +8,8 @@ EnemyShooting::EnemyShooting(const std::string& name) :
   freelist(),
   minSpeed( Gamedata::getInstance().getXmlInt(bulletName+"/speedX") ),
   bulletInterval(Gamedata::getInstance().getXmlInt(bulletName+"/interval")),
-  timeSinceLastFrame(0)
+  timeSinceLastFrame(0),
+  shootDelay(0)
 { }
 
 EnemyShooting::EnemyShooting(const std::string& name, int px, int py, int vx, int vy) :
@@ -18,7 +19,8 @@ EnemyShooting::EnemyShooting(const std::string& name, int px, int py, int vx, in
   freelist(),
   minSpeed( Gamedata::getInstance().getXmlInt(bulletName+"/speedX") ),
   bulletInterval(Gamedata::getInstance().getXmlInt(bulletName+"/interval")),
-  timeSinceLastFrame(0)
+  timeSinceLastFrame(0),
+  shootDelay(0)
 { }
 
 EnemyShooting::EnemyShooting(const EnemyShooting& s) :
@@ -28,7 +30,8 @@ EnemyShooting::EnemyShooting(const EnemyShooting& s) :
   freelist(s.freelist),
   minSpeed(s.minSpeed),
   bulletInterval(s.bulletInterval),
-  timeSinceLastFrame(s.timeSinceLastFrame)
+  timeSinceLastFrame(s.timeSinceLastFrame),
+  shootDelay(s.shootDelay)
 { }
 
 unsigned int EnemyShooting::getBulletList(){
@@ -44,22 +47,22 @@ void EnemyShooting::shoot() {
   float deltaX = getScaledWidth() - 50;
   float deltaY = getScaledHeight()/4;
   // I need to add some minSpeed to velocity:
-  if(getPlayerDirection() == RIGHT){
-    if(freelist.empty()) {
-      Bullet bullet(bulletName);
-      bullet.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
-      bullet.setVelocity( getVelocity() + Vector2f(minSpeed, 0) );
-      bullets.push_back( bullet );
-      timeSinceLastFrame = 0;
-    } else{
-      Bullet b=freelist.front();
-      freelist.pop_front();
-      b.reset();
-      b.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
-      b.setVelocity( getVelocity() + Vector2f(minSpeed, 0) );
-      bullets.push_back(b);
-    }
-  } else{
+  // if(getPlayerDirection() == RIGHT){
+  //   if(freelist.empty()) {
+  //     Bullet bullet(bulletName);
+  //     bullet.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
+  //     bullet.setVelocity( getVelocity() + Vector2f(minSpeed, 0) );
+  //     bullets.push_back( bullet );
+  //     timeSinceLastFrame = 0;
+  //   } else{
+  //     Bullet b=freelist.front();
+  //     freelist.pop_front();
+  //     b.reset();
+  //     b.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
+  //     b.setVelocity( getVelocity() + Vector2f(minSpeed, 0) );
+  //     bullets.push_back(b);
+  //   }
+  // } else{
     deltaX = deltaX - 175;
     if(freelist.empty()) {
       Bullet bullet(bulletName);
@@ -74,7 +77,7 @@ void EnemyShooting::shoot() {
       b.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
       b.setVelocity( getVelocity() - Vector2f(minSpeed, 0) );
       bullets.push_back(b);
-    }
+    // }
   }
 
   
@@ -90,6 +93,12 @@ void EnemyShooting::draw() const {
 void EnemyShooting::update(Uint32 ticks) {
   timeSinceLastFrame += ticks;
   Enemy::update(ticks);
+
+  if (shootDelay >= 10){
+    shootDelay = 0;
+    shoot();
+  } else shootDelay++;
+
   std::list<Bullet>::iterator ptr=bullets.begin();
   while(ptr!=bullets.end())
   {

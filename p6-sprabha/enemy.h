@@ -33,5 +33,6 @@ private:
   Vector2f initialVelocity;
   float initialX;
   FACE facing;
+  int health;
 };
 #endif

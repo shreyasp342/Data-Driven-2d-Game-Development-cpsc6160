@@ -39,7 +39,7 @@ private:
   std::vector <Drawable*> sprites;
   std::vector <std::string> collected;
   ShootingSprite* player;
-  EnemyShooting* enemy;
+  Sprite* shenron;
   std::vector <EnemyShooting*> enemies;
   std::vector<CollisionStrategy*> strategies;
   int currentStrategy;

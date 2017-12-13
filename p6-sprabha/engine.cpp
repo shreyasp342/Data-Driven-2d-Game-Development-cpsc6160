@@ -24,6 +24,9 @@ Engine::~Engine() {
   for(auto sprite : dragonballs){
   	delete sprite;
   }
+  for(auto sprite : enemies){
+    delete sprite;
+  }
   for(auto sprite : sprites){
     delete sprite;
   }
@@ -31,7 +34,7 @@ Engine::~Engine() {
   for ( CollisionStrategy* strategy : strategies ) {
     delete strategy;
   }
-  delete enemy;
+  delete shenron;
 
   std::cout << "Terminating program" << std::endl;
 }
@@ -49,7 +52,7 @@ Engine::Engine() :
   sprites(),
   collected(),
   player(new ShootingSprite("goku")),
-  enemy(new EnemyShooting("cycle")),
+  shenron(new Sprite("shenron")),
   enemies(),
   strategies(),
   currentStrategy(0),
@@ -80,7 +83,7 @@ Engine::Engine() :
 
   std::cout << "Limiter: " << player->getLimiter() << std:: endl;
 
-  for (unsigned int i = 0; i < 5; ++i) {
+  for (unsigned int i = 0; i < 3; ++i) {
     std::string name = "cycle";
     int px = player->getLimiter() + 200;
     int py = rand()%worldHeight;
@@ -133,16 +136,20 @@ void Engine::draw() const {
     sky2.draw();
   }
   city.draw();
+  for(auto sprite : dragonballs){
+    if ( !(sprite->exploded()) ) sprite->draw();
+  }
+  if (dragonballs.size() <= 0){
+    shenron->setScale(0.45);
+    shenron->draw();
+  }
   land.draw();
   for(auto sprite : sprites){
     sprite->draw();
   }
-  for(auto sprite : dragonballs){
-    if ( !(sprite->exploded()) ) sprite->draw();
-  }
   player->draw();
   // player->setObstruct(collected.size());
-  enemy->draw();
+
   for(auto sprite : enemies){
     if ( !(sprite->exploded()) ) sprite->draw();
   }
@@ -262,10 +269,11 @@ void Engine::checkForCollisions() {
 
 void Engine::update(Uint32 ticks) {
     std::cout << counter << ", " << player->getLimiter() << std::endl;
-  if(enemies.size()<=0){
+    player->setObstruct(counter);
+  if(enemies.size()<=0 && counter < 7){
     player->setObstruct(++counter);
     std::cout << counter << ", " << player->getLimiter() << std::endl;
-    for (unsigned int i = 0; i < 5; ++i) {
+    for (unsigned int i = 0; i < 3; ++i) {
       std::string name = "cycle";
       int px = player->getLimiter() + 200;
       int py = rand()%worldHeight;
@@ -317,7 +325,10 @@ void Engine::update(Uint32 ticks) {
   //   sprite->update(ticks);
   // }
   player->update(ticks);
-  enemy->update(ticks);
+  // enemy->update(ticks);
+  if (dragonballs.size() <= 0){
+    shenron->update(ticks);
+  }
   checkForCollisions();
   sky.update();
   city.update();
@@ -364,8 +375,8 @@ bool Engine::play() {
         if ( keystate[SDL_SCANCODE_SPACE] ) {
             player->shoot();
         }
-        if ( keystate[SDL_SCANCODE_B] ) {
-            enemy->shoot();
+        if ( keystate[SDL_SCANCODE_G] ) {
+            counter = 8;
         }
         if ( keystate[SDL_SCANCODE_M] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();

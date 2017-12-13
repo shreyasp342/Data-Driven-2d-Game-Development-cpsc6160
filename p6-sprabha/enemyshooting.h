@@ -29,6 +29,7 @@ private:
   float minSpeed;
   float bulletInterval;
   float timeSinceLastFrame;
+  int shootDelay;
   EnemyShooting& operator=(const EnemyShooting&);
 };
 
