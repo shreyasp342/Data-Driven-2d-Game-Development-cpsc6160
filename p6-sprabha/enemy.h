@@ -15,11 +15,9 @@ public:
   void missed() { collision = false; }
   Enemy& operator=(const Enemy&);
 
-  void right();
-  void left();
-  void up();
-  void down();
-  void stop();
+  void explode();
+  void setHealth(int x) { health = x; }
+  int getHealth() const { return health; }
 
   enum FACE {LEFT, RIGHT};
   FACE getPlayerDirection() const { return facing; }

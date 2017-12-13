@@ -36,6 +36,7 @@ public:
 protected:
   std::vector<Image *> images;
   ExplodingSprite* explosion;
+  bool checkExplode;
 
   unsigned currentFrame;
   unsigned numberOfFrames;
@@ -43,7 +44,6 @@ protected:
   float timeSinceLastFrame;
   int worldWidth;
   int worldHeight;
-  bool checkExplode;
 
   void advanceFrame(Uint32 ticks);
   MultiSprite& operator=(const MultiSprite&);

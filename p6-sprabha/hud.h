@@ -13,7 +13,7 @@ public:
   void summon(SDL_Renderer * const);
   void gameover(SDL_Renderer * const);
   void win(SDL_Renderer * const);
-  void drawPool(SDL_Renderer * const, unsigned int, unsigned int);
+  void healthBar(SDL_Renderer * const, unsigned int, unsigned int, unsigned int, unsigned int, int);
   ~Hud();
 private:
   const IOmod& io;

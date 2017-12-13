@@ -52,6 +52,7 @@ private:
   bool makeVideo;
   bool showHud;
   bool invoke;
+  bool godmode;
   SDLSound sound;
 
   void draw() const;

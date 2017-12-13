@@ -66,8 +66,6 @@ void ShootingSprite::shoot() {
       bullets.push_back(b);
     }
   }
-
-  
 }
 
 void ShootingSprite::draw() const { 

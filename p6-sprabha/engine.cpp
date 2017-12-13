@@ -10,7 +10,6 @@
 #include "subjectSprite.h"
 #include "sprite.h"
 #include "multisprite.h"
-// #include "twowaysprite.h"
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
@@ -26,8 +25,6 @@ public:
     return lhs->getScale() < rhs->getScale();
   }
 };
-
-
 
 Engine::~Engine() { 
   for(auto sprite : dragonballs){
@@ -77,10 +74,12 @@ Engine::Engine() :
   makeVideo( false ),
   showHud( false ),
   invoke (false),
+  godmode(false),
   sound(),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
-  counter(0),painters()
+  counter(0),
+  painters()
 {
   srand(time(0));
   Vector2f pos = player->getPosition();
@@ -97,49 +96,36 @@ Engine::Engine() :
     player->attach( dragonballs[i] );
   }
 
-  std::cout << "Limiter: " << player->getLimiter() << std:: endl;
-
   for (unsigned int i = 0; i < 1; ++i) {
     std::string name = "blah";
     int px = player->getLimiter() + 200;
     int py = rand()%worldHeight;
-    // int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y");
     int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
     if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
     int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
     if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
-    std::cout << px << ", " << py << ", " << vx << ", " << vy << ", " << rand()%2 << std::endl;
     enemies.push_back(new EnemyShooting(name.c_str(), px, py, vx, vy));
   }
 
   for (unsigned int i = 0; i < 5; ++i) {
     std::string name = "valor";
     int px = rand()%worldWidth * (rand()%2?1:-1);
-    // int y = rand()%worldHeight;
     int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y");
     int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
     if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
     int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
     if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
-    // std::cout << px << ", " << py << ", " << vx << ", " << vy << ", " << rand()%2 << std::endl;
     sprites.push_back(new MultiSprite(name.c_str(), px, py, vx, vy));
   }
-  // sprites.push_back(new MultiSprite("valor"));
-  // sprites.push_back(new twowaySprite("cycle"));
-  // sprites.push_back(new EnemyShooting("cycle"));
-  // std::cout << dragonballs[0]->getName() << std::endl;
-  // collected.push_back(dragonballs[0]->getName());
-  // std::cout << collected[0] << std::endl;
   
   strategies.push_back( new PerPixelCollisionStrategy );
   strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new MidPointCollisionStrategy );
 
-  // Viewport::getInstance().setObjectToTrack(player);
   unsigned int n = Gamedata::getInstance().getXmlInt("numberOfStars");
   for ( unsigned int i = 0; i < n; ++i ) {
     twowaySprite* s = new twowaySprite("crow");
-    float scale = Gamedata::getInstance().getRandFloat(0.25,0.5);
+    float scale = Gamedata::getInstance().getRandFloat(0.25,0.65);
     s->setScale(scale);
     painters.push_back(s);
   }
@@ -166,20 +152,11 @@ Engine::Engine() :
     sprite->setPosition(Vector2f(px,py));
   }
 
-
-
-
   Viewport::getInstance().setObjectToTrack(player);
   std::cout << "Loading complete" << std::endl;
 }
 
 void Engine::draw() const {
-  SDL_Color textColor;
-  textColor.r = Gamedata::getInstance().getXmlInt("font/red");
-  textColor.g = Gamedata::getInstance().getXmlInt("font/green");
-  textColor.b = Gamedata::getInstance().getXmlInt("font/blue");
-  textColor.a = Gamedata::getInstance().getXmlInt("font/alpha");
-  
   sky.draw();
   if (invoke){
     sky2.draw();
@@ -194,56 +171,42 @@ void Engine::draw() const {
     Hud::getInstance().win(renderer);
     clock.pause();
   }
-  land.draw();
-  for(auto sprite : sprites){
-    sprite->draw();
+  else{
+    for(auto* s : painters) s->draw();
+    for(auto sprite : sprites){
+      sprite->draw();
+    }  
+    for(auto ball : collected){ 
+      int x = Gamedata::getInstance().getXmlInt(ball+"/collected/x");
+      int y = Gamedata::getInstance().getXmlInt(ball+"/collected/y"); 
+      IOmod::getInstance().writeImage(ball, x, y);
+    }
   }
+  if(godmode){
+    SDL_Color textColor;
+    textColor.r = Gamedata::getInstance().getXmlInt("hud/textColor/red");
+    textColor.g = Gamedata::getInstance().getXmlInt("hud/textColor/green");
+    textColor.b = Gamedata::getInstance().getXmlInt("hud/textColor/blue");
+    textColor.a = Gamedata::getInstance().getXmlInt("hud/textColor/alpha");
+    io.writeText("GodMode ON!", 430, 30, textColor);
+    io.writeText("Goku is now Invincible", 400, 60, textColor);
+  }
+
+  land.draw();
   player->draw();
-  // player->setObstruct(collected.size());
 
   for(auto sprite : enemies){
     if ( !(sprite->exploded()) ) sprite->draw();
   }
-  // auto it = enemies.begin();
-  // while ( it != enemies.end() ) {
-  //   if ( (*it)->exploded() ) {
-  //     delete (*it);
-  //     it = enemies.erase(it);
-  //   }
-  //   else{
-  //     (*it)->draw();
-  //     ++it;
-  //   } 
-  // }
-  std::cout << enemies.size() << std::endl;
 
-  for(auto ball : collected){ 
-    int x = Gamedata::getInstance().getXmlInt(ball+"/collected/x");
-    int y = Gamedata::getInstance().getXmlInt(ball+"/collected/y"); 
-    IOmod::getInstance().writeImage(ball, x, y);
-  }
-
-    for(auto* s : painters) s->draw();
-
-
-  if (dragonballs.size() > 0){
-    std::stringstream strm;
-    strm << dragonballs.size() << " Dragon Balls Remaining";
-    IOmod::getInstance().writeText(strm.str(), 500, 120, textColor);
-  } else {
+  if (dragonballs.size() <= 0){
     if(!invoke) Hud::getInstance().summon(renderer);
-    }
-
-  strategies[currentStrategy]->draw();
-  if ( collision ) {
-    IOmod::getInstance().writeText("Oops: Collision", 500, 60, textColor);
   }
 
   drawHud();
 
   if ( player->exploded() ) {
     Hud::getInstance().gameover(renderer);
-    // clock.pause();
   }
   viewport.draw();  
   SDL_RenderPresent(renderer);
@@ -251,28 +214,7 @@ void Engine::draw() const {
 
 void Engine::checkForCollisions() {
   collision = false;
-  // for ( const MultiSprite* d : sprites ) {
-  //   if ( strategies[currentStrategy]->execute(*player, *d) ) {
-  //     collision = true;
-  //   }
-  // }
-
-  // if ( strategies[currentStrategy]->execute(*player, *enemy) ) {
-  //   collision = true;
-  //   player->up();  
-  //   // dragonballs.push_back( new SmartSprite("Ball1", pos, w, h) );
-  // }
-
-  // if ( strategies[currentStrategy]->execute(*sprites[0], *player) ) {
-  //   collision = true;
-  //   player->explode();
-  // }
-  // for ( const auto d : player->getBullets() ) {
-  //   if ( strategies[currentStrategy]->execute(*sprites[0], d) ) {
-  //     collision = true;
-  //     sprites[0]->explode();
-  //   }
-  // }
+  
   for(const auto enemy : enemies){
     for (const auto d : enemy->getBullets() ) {
       if ( strategies[currentStrategy]->execute(d, *player) ) {
@@ -284,11 +226,6 @@ void Engine::checkForCollisions() {
   for ( const auto d : player->getBullets() ) {
     auto it = enemies.begin();
     while ( it != enemies.end() ) {
-      // if ( (*it)->exploded() ) {
-      //   delete (*it);
-      //   it = enemies.erase(it);
-      // } 
-      // else if ( strategies[currentStrategy]->execute(d, **it) ) {
       if ( strategies[currentStrategy]->execute(d, **it) ) {
         (*it)->explode();
         it++;
@@ -298,19 +235,9 @@ void Engine::checkForCollisions() {
   }
 
   auto it = dragonballs.begin();
-  // while ( it != dragonballs.end() ) {
-  //   if ( strategies[currentStrategy]->execute(*player, **it) ) {
-  //     (*it)->explode();
-  //     it++;
-  //   }
-  //   else ++it;
-  // }
-  // it = dragonballs.begin();
   while ( it != dragonballs.end() ) {
-    // if ( (*it)->exploded() ) {
     if ( strategies[currentStrategy]->execute(*player, **it) ) {
       collected.push_back((*it)->getName());
-      // std::cout << (*it)->getName() << std::endl;
       SmartSprite* doa = *it;
       player->detach(doa);
       delete doa;
@@ -329,6 +256,14 @@ void Engine::checkForCollisions() {
 }
 
 void Engine::update(Uint32 ticks) {
+  if(godmode){
+    auto it = enemies.begin();
+    while ( it != enemies.end() ) {
+      delete (*it);
+      it = enemies.erase(it);
+    }
+    counter = 8;
+  }
   if (invoke){
     auto it = sprites.begin();
     while ( it != sprites.end() ) {
@@ -345,31 +280,31 @@ void Engine::update(Uint32 ticks) {
   player->setObstruct(counter);
   if(enemies.size()<=0 && counter < 7){
     player->setObstruct(++counter);
-    for (unsigned int i = 0; i < 1; ++i) {
-      std::string name;
-      switch(counter){
-        case 0: name = "blah"; break;
-        case 1: name = "piccolo"; break;
-        case 2: name = "raditz"; break;
-        case 3: name = "nappa"; break;
-        case 4: name = "rakoom"; break;
-        case 5: name = "ginyu"; break;
-        case 6: default: name = "frieza"; break;
+    if(counter < 7){
+      for (unsigned int i = 0; i < 1; ++i) {
+        std::string name;
+        switch(counter){
+          case 0: name = "blah"; break;
+          case 1: name = "piccolo"; break;
+          case 2: name = "raditz"; break;
+          case 3: name = "nappa"; break;
+          case 4: name = "rakoom"; break;
+          case 5: name = "ginyu"; break;
+          case 6: default: name = "frieza"; break;
+        }
+        int px = player->getLimiter() + 200;
+        int py = rand()%worldHeight;
+        int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
+        if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+        int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
+        if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
+        enemies.push_back(new EnemyShooting(name.c_str(), px, py, vx, vy));
       }
-      // std::string name = "cycle";
-      int px = player->getLimiter() + 200;
-      int py = rand()%worldHeight;
-      int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
-      if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
-      int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
-      if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
-      std::cout << px << ", " << py << ", " << vx << ", " << vy << ", " << rand()%2 << std::endl;
-      enemies.push_back(new EnemyShooting(name.c_str(), px, py, vx, vy));
     }
+    
   }
 
   if ( player->exploded() ) {
-    // Hud::getInstance().gameover(renderer);
     clock.pause();
   }
 
@@ -385,7 +320,6 @@ void Engine::update(Uint32 ticks) {
     } 
   }
 
-
   for(auto* s : painters) s->update(ticks);
 
   for(auto sprite : dragonballs){
@@ -394,9 +328,6 @@ void Engine::update(Uint32 ticks) {
   for(auto sprite : sprites){
     sprite->update(ticks);
   }
-  // for(auto sprite : enemies){
-  //   sprite->update(ticks);
-  // }
   player->update(ticks);
   if (dragonballs.size() <= 0){
     shenron->update(ticks);
@@ -408,15 +339,21 @@ void Engine::update(Uint32 ticks) {
   viewport.update(); // always update viewport last
 }
 
-void Engine::drawHud() const {
-  unsigned int freelistSize = player->getFreeList();
-  unsigned int bulletlistSize = player->getBulletList();
+void Engine::drawHud() const {  
+  int x = 10;
+  int y = 10;
+  int w = 506;
+  int h = 20;
+  int multiplier = w/100;
+  Hud::getInstance().healthBar(renderer, x, y, w, h, player->getHealth()*multiplier);
   
+  x = 1024;
+  for(auto sprite : enemies){
+    Hud::getInstance().healthBar(renderer, x-=30, y, w, h, sprite->getHealth()*multiplier);
+  }
   if (showHud || clock.getSeconds() <= 3){
   	Hud::getInstance().draw(renderer);
-    Hud::getInstance().drawPool(renderer, bulletlistSize, freelistSize);
-
-  }
+    }
  }
 
 bool Engine::play() {
@@ -451,12 +388,7 @@ bool Engine::play() {
             player->shoot();
         }
         if ( keystate[SDL_SCANCODE_G] ) {
-          auto it = enemies.begin();
-          while ( it != enemies.end() ) {
-              delete (*it);
-              it = enemies.erase(it);
-          }
-          counter = 8;
+          godmode = ~godmode;
         }
         if ( keystate[SDL_SCANCODE_M] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();

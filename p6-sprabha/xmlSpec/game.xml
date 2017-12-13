@@ -17,7 +17,7 @@
 </view>
 
 <world>
-  <width>5520</width>
+  <width>5620</width>
   <height>600</height>
 </world>
 
@@ -70,7 +70,7 @@
   <transparency>true</transparency>
 </YellowStar>
 
-<numberOfStars>25</numberOfStars>
+<numberOfStars>20</numberOfStars>
 
 <Ball1>
   <file>assets/ball1.bmp</file>
@@ -187,7 +187,7 @@
 
 <shenron>
   <file>assets/shenron4.png</file>
-  <startLoc x="4750" y="50"/>
+  <startLoc x="4850" y="50"/>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
@@ -216,7 +216,7 @@
   <frames>2</frames>
   <imageWidth>498</imageWidth>
   <imageHeight>414</imageHeight>
-  <frameInterval>15</frameInterval>
+  <frameInterval>200</frameInterval>
   <speedX>50</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
@@ -232,7 +232,7 @@
   <frames>2</frames>
   <imageWidth>498</imageWidth>
   <imageHeight>414</imageHeight>
-  <frameInterval>15</frameInterval>
+  <frameInterval>200</frameInterval>
   <speedX>50</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>

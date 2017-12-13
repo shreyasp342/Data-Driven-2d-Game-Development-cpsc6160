@@ -1,5 +1,5 @@
 // Shreyas Prahakar       Data-Driven Object oriented Game Construction
-// Project 4
+// Project 6
 #include "engine.h"
 
 // ImageFactory*  ImageFactory::instance = NULL;
