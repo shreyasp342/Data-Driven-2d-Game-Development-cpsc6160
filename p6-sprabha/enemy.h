@@ -23,10 +23,6 @@ public:
 
   enum FACE {LEFT, RIGHT};
   FACE getPlayerDirection() const { return facing; }
-
-protected:
-  std::vector<Image *> imagesRight;
-  std::vector<Image *> imagesLeft;
   
 private:
   bool collision;

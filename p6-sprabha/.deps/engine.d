@@ -24,8 +24,8 @@ build/engine.o: engine.cpp smartSprite.h sprite.h drawable.h \
  player.h multisprite.h gamedata.h parseXML.h engine.h ioMod.h \
  /usr/include/SDL2/SDL_ttf.h /usr/include/SDL2/SDL.h renderContext.h \
  imageFactory.h spriteSheet.h clock.h world.h viewport.h sound.h \
- frameGenerator.h hud.h collisionStrategy.h shootingSprite.h bullet.h \
- enemyshooting.h enemy.h
+ twowaysprite.h frameGenerator.h hud.h collisionStrategy.h \
+ shootingSprite.h bullet.h enemyshooting.h enemy.h
 
 smartSprite.h:
 
@@ -154,6 +154,8 @@ world.h:
 viewport.h:
 
 sound.h:
+
+twowaysprite.h:
 
 frameGenerator.h:
 

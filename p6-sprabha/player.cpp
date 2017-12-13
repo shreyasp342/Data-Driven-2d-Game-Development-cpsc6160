@@ -8,7 +8,7 @@ Player::Player( const std::string& name) :
   collision(false),
   initialVelocity(getVelocity()),
   facing(RIGHT),
-  // obstruct(0),
+  health(100),
   limiter(400)
   {
     MultiSprite::images = imagesRight;
@@ -18,11 +18,10 @@ Player::Player(const Player& s) :
   MultiSprite(s), 
   imagesRight(s.imagesRight),
   imagesLeft(s.imagesLeft),
-  // images(s.images),
   collision(s.collision),
   initialVelocity(s.getVelocity()),
   facing(s.facing),
-  // obstruct(s.obstruct),
+  health(s.getHealth()),
   limiter(400)
   { 
     MultiSprite::images = imagesRight;
@@ -36,7 +35,7 @@ Player& Player::operator=(const Player& s) {
   collision = s.collision;
   initialVelocity = s.initialVelocity;
   facing = s.facing;
-  // obstruct = s.obstruct;
+  health = s.health;
   limiter = s.limiter;
   return *this;
 }
@@ -67,6 +66,13 @@ void Player::up()    {
 void Player::down()  { 
   if ( getY() < worldHeight-getScaledHeight() +5) {
     setVelocityY( initialVelocity[1] );
+  }
+}
+
+void Player::explode() {
+  setHealth(getHealth() - 1);
+  if(getHealth() <= 0){
+    MultiSprite::explode();
   }
 }
 

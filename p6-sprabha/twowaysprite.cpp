@@ -76,10 +76,10 @@ void twowaySprite::draw() const {
 }
 
 void twowaySprite::update(Uint32 ticks) { 
-  if ( getX() < 0) {
+  if ( getX() < 0 || getVelocityX() > 0) {
     images = imagesRight;
   }
-  if ( getX() > worldWidth-getScaledWidth()) {
+  if ( getX() > worldWidth-getScaledWidth()|| getVelocityX() < 0) {
     images = imagesLeft;
   }  
   if ( explosion ) {

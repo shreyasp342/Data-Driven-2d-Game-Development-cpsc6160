@@ -19,8 +19,11 @@ public:
   void up();
   void down();
   void stop();
+  void explode();
   void setObstruct(const int);
   int getLimiter() const { return limiter; }
+  void setHealth(int x) { health = x; }
+  int getHealth() const { return health; }
 
   enum FACE {LEFT, RIGHT};
   FACE getPlayerDirection() const { return facing; }
@@ -33,7 +36,7 @@ private:
   bool collision;
   Vector2f initialVelocity;
   FACE facing;
-  // int obstruct;
+  int health;
   int limiter;
 };
 #endif

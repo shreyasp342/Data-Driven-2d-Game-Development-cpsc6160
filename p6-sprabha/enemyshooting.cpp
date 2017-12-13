@@ -1,3 +1,5 @@
+#include <random>
+#include <ctime>
 #include "enemyshooting.h"
 #include "gamedata.h"
 
@@ -46,41 +48,21 @@ void EnemyShooting::shoot() {
   if ( timeSinceLastFrame < bulletInterval ) return;
   float deltaX = getScaledWidth() - 50;
   float deltaY = getScaledHeight()/4;
-  // I need to add some minSpeed to velocity:
-  // if(getPlayerDirection() == RIGHT){
-  //   if(freelist.empty()) {
-  //     Bullet bullet(bulletName);
-  //     bullet.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
-  //     bullet.setVelocity( getVelocity() + Vector2f(minSpeed, 0) );
-  //     bullets.push_back( bullet );
-  //     timeSinceLastFrame = 0;
-  //   } else{
-  //     Bullet b=freelist.front();
-  //     freelist.pop_front();
-  //     b.reset();
-  //     b.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
-  //     b.setVelocity( getVelocity() + Vector2f(minSpeed, 0) );
-  //     bullets.push_back(b);
-  //   }
-  // } else{
-    deltaX = deltaX - 175;
-    if(freelist.empty()) {
-      Bullet bullet(bulletName);
-      bullet.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
-      bullet.setVelocity( getVelocity() - Vector2f(minSpeed, 0) );
-      bullets.push_back( bullet );
-      timeSinceLastFrame = 0;
-    } else{
-      Bullet b=freelist.front();
-      freelist.pop_front();
-      b.reset();
-      b.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
-      b.setVelocity( getVelocity() - Vector2f(minSpeed, 0) );
-      bullets.push_back(b);
-    // }
-  }
-
-  
+  deltaX = deltaX - 175;
+  if(freelist.empty()) {
+    Bullet bullet(bulletName);
+    bullet.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
+    bullet.setVelocity( getVelocity() - Vector2f(minSpeed, 0) );
+    bullets.push_back( bullet );
+    timeSinceLastFrame = 0;
+  } else{
+    Bullet b=freelist.front();
+    freelist.pop_front();
+    b.reset();
+    b.setPosition( getPosition() + Vector2f(deltaX, deltaY) );
+    b.setVelocity( getVelocity() - Vector2f(minSpeed, 0) );
+    bullets.push_back(b);
+  }  
 }
 
 void EnemyShooting::draw() const { 
@@ -94,7 +76,7 @@ void EnemyShooting::update(Uint32 ticks) {
   timeSinceLastFrame += ticks;
   Enemy::update(ticks);
 
-  if (shootDelay >= 10){
+  if (shootDelay >= 30 + rand()%20){
     shootDelay = 0;
     shoot();
   } else shootDelay++;

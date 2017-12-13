@@ -8,9 +8,10 @@
 #include "viewport.h"
 #include "smartSprite.h"
 #include "sound.h"
-// #include "shootingSprite.h"
+#include "twowaysprite.h"
 
-// class SubjectSprite;
+class MultiSprite;
+class twowaySprite;
 class ShootingSprite;
 class EnemyShooting;
 class CollisionStrategy;
@@ -36,7 +37,7 @@ private:
   World land;
 
   std::vector <SmartSprite*> dragonballs;
-  std::vector <Drawable*> sprites;
+  std::vector <MultiSprite*> sprites;
   std::vector <std::string> collected;
   ShootingSprite* player;
   Sprite* shenron;
@@ -50,8 +51,8 @@ private:
 
   bool makeVideo;
   bool showHud;
+  bool invoke;
   SDLSound sound;
-  // bool shoot;
 
   void draw() const;
   void drawHud() const;
@@ -62,6 +63,5 @@ private:
   int worldWidth;
   int worldHeight;
   int counter;
-  
-
+  std::vector<twowaySprite*> painters;
 };

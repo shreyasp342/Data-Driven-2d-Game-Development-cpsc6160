@@ -10,6 +10,9 @@ class Hud{
 public:
   static Hud& getInstance();
   void draw(SDL_Renderer * const);
+  void summon(SDL_Renderer * const);
+  void gameover(SDL_Renderer * const);
+  void win(SDL_Renderer * const);
   void drawPool(SDL_Renderer * const, unsigned int, unsigned int);
   ~Hud();
 private:

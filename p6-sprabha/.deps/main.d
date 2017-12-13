@@ -22,7 +22,8 @@ build/main.o: main.cpp engine.h /usr/include/SDL2/SDL.h \
  /usr/include/SDL2/SDL_timer.h /usr/include/SDL2/SDL_version.h ioMod.h \
  /usr/include/SDL2/SDL_ttf.h /usr/include/SDL2/SDL.h renderContext.h \
  imageFactory.h image.h gamedata.h vector2f.h parseXML.h spriteSheet.h \
- clock.h world.h viewport.h drawable.h smartSprite.h sprite.h sound.h
+ clock.h world.h viewport.h drawable.h smartSprite.h sprite.h sound.h \
+ twowaysprite.h
 
 engine.h:
 
@@ -145,3 +146,5 @@ smartSprite.h:
 sprite.h:
 
 sound.h:
+
+twowaysprite.h:

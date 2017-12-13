@@ -62,6 +62,16 @@
   <alpha>0</alpha>
 </namefont>
 
+<YellowStar>
+  <file>assets/yellowstar32.png</file>
+  <startLoc x="427" y="240"/>
+  <speedX>-175</speedX>
+  <speedY>-175</speedY>
+  <transparency>true</transparency>
+</YellowStar>
+
+<numberOfStars>25</numberOfStars>
+
 <Ball1>
   <file>assets/ball1.bmp</file>
   <startLoc x="650" y="490"/>
@@ -174,15 +184,6 @@
     <distance>200</distance>
   </chunk>
 </energyBall>
-<!-- 
-<shenron>
-  <file>assets/shenron.png</file>
-  <startLoc x="4550" y="10"/>
-  <speedX>0</speedX>
-  <speedY>0</speedY>
-  <transparency>false</transparency>
-  <safeDistance>150</safeDistance>
-</shenron> -->
 
 <shenron>
   <file>assets/shenron4.png</file>
@@ -209,13 +210,45 @@
   </chunk>
 </valor>
 
-<cycle>
-  <file>assets/cycleright.png</file>
-  <bullet>energyBall</bullet>
-  <startLoc x="3900" y="410"/>
+<crow>
+  <file>assets/crowsRight.png</file>
+  <startLoc x="50" y="80"/>
   <frames>2</frames>
-  <imageWidth>160</imageWidth>
-  <imageHeight>120</imageHeight>
+  <imageWidth>498</imageWidth>
+  <imageHeight>414</imageHeight>
+  <frameInterval>15</frameInterval>
+  <speedX>50</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</crow>
+
+<crowLeft>
+  <file>assets/crows.png</file>
+  <startLoc x="50" y="80"/>
+  <frames>2</frames>
+  <imageWidth>498</imageWidth>
+  <imageHeight>414</imageHeight>
+  <frameInterval>15</frameInterval>
+  <speedX>50</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</crowLeft>
+
+<blah>
+  <file>assets/blah.png</file>
+  <bullet>energyBall</bullet>
+  <startLoc x="169" y="170"/>
+  <frames>1</frames>
+  <imageWidth>169</imageWidth>
+  <imageHeight>170</imageHeight>
   <frameInterval>80</frameInterval>
   <speedX>25</speedX>
   <speedY>100</speedY>
@@ -224,24 +257,109 @@
     <size>9</size>
     <distance>200</distance>
   </chunk>
-</cycle>
+</blah>
 
-<cycleLeft>
-  <file>assets/cycleleft.png</file>
+<piccolo>
+  <file>assets/piccolo.png</file>
   <bullet>energyBall</bullet>
-  <startLoc x="3900" y="410"/>
-  <frames>2</frames>
-  <imageWidth>160</imageWidth>
-  <imageHeight>120</imageHeight>
+  <startLoc x="161" y="134"/>
+  <frames>1</frames>
+  <imageWidth>161</imageWidth>
+  <imageHeight>134</imageHeight>
   <frameInterval>80</frameInterval>
-  <speedX>300</speedX>
-  <speedY>0</speedY>
+  <speedX>25</speedX>
+  <speedY>100</speedY>
   <transparency>true</transparency>
   <chunk>
     <size>9</size>
     <distance>200</distance>
   </chunk>
-</cycleLeft>
+</piccolo>
+
+<frieza>
+  <file>assets/frieza.png</file>
+  <bullet>energyBall</bullet>
+  <startLoc x="156" y="115"/>
+  <frames>1</frames>
+  <imageWidth>156</imageWidth>
+  <imageHeight>115</imageHeight>
+  <frameInterval>80</frameInterval>
+  <speedX>25</speedX>
+  <speedY>100</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</frieza>
+
+<ginyu>
+  <file>assets/ginyu.png</file>
+  <bullet>energyBall</bullet>
+  <startLoc x="159" y="205"/>
+  <frames>1</frames>
+  <imageWidth>159</imageWidth>
+  <imageHeight>205</imageHeight>
+  <frameInterval>80</frameInterval>
+  <speedX>25</speedX>
+  <speedY>100</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</ginyu>
+
+<nappa>
+  <file>assets/nappa.png</file>
+  <bullet>energyBall</bullet>
+  <startLoc x="174" y="172"/>
+  <frames>1</frames>
+  <imageWidth>174</imageWidth>
+  <imageHeight>172</imageHeight>
+  <frameInterval>80</frameInterval>
+  <speedX>25</speedX>
+  <speedY>100</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</nappa>
+
+<raditz>
+  <file>assets/raditz.png</file>
+  <bullet>energyBall</bullet>
+  <startLoc x="109" y="137"/>
+  <frames>1</frames>
+  <imageWidth>109</imageWidth>
+  <imageHeight>137</imageHeight>
+  <frameInterval>80</frameInterval>
+  <speedX>25</speedX>
+  <speedY>100</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</raditz>
+
+<rakoom>
+  <file>assets/rakoom.png</file>
+  <bullet>energyBall</bullet>
+  <startLoc x="3900" y="410"/>
+  <frames>1</frames>
+  <imageWidth>212</imageWidth>
+  <imageHeight>202</imageHeight>
+  <frameInterval>80</frameInterval>
+  <speedX>25</speedX>
+  <speedY>100</speedY>
+  <transparency>true</transparency>
+  <chunk>
+    <size>9</size>
+    <distance>200</distance>
+  </chunk>
+</rakoom>
 
 <goku>
   <file>assets/gokuRight.png</file>

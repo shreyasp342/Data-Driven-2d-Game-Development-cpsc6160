@@ -20,6 +20,15 @@
 #include "shootingSprite.h"
 #include "enemyshooting.h"
 
+class SpriteLess {
+public:
+  bool operator()(const twowaySprite* lhs, const twowaySprite* rhs) const {
+    return lhs->getScale() < rhs->getScale();
+  }
+};
+
+
+
 Engine::~Engine() { 
   for(auto sprite : dragonballs){
   	delete sprite;
@@ -35,6 +44,12 @@ Engine::~Engine() {
     delete strategy;
   }
   delete shenron;
+
+   std::vector<twowaySprite*>::iterator it = painters.begin();
+  while ( it != painters.end() ) {
+    delete *it;
+    ++it;
+  }
 
   std::cout << "Terminating program" << std::endl;
 }
@@ -61,10 +76,11 @@ Engine::Engine() :
   currentSprite(0),
   makeVideo( false ),
   showHud( false ),
+  invoke (false),
   sound(),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
-  counter(0)
+  counter(0),painters()
 {
   srand(time(0));
   Vector2f pos = player->getPosition();
@@ -83,8 +99,8 @@ Engine::Engine() :
 
   std::cout << "Limiter: " << player->getLimiter() << std:: endl;
 
-  for (unsigned int i = 0; i < 3; ++i) {
-    std::string name = "cycle";
+  for (unsigned int i = 0; i < 1; ++i) {
+    std::string name = "blah";
     int px = player->getLimiter() + 200;
     int py = rand()%worldHeight;
     // int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y");
@@ -120,6 +136,39 @@ Engine::Engine() :
   strategies.push_back( new MidPointCollisionStrategy );
 
   // Viewport::getInstance().setObjectToTrack(player);
+  unsigned int n = Gamedata::getInstance().getXmlInt("numberOfStars");
+  for ( unsigned int i = 0; i < n; ++i ) {
+    twowaySprite* s = new twowaySprite("crow");
+    float scale = Gamedata::getInstance().getRandFloat(0.25,0.5);
+    s->setScale(scale);
+    painters.push_back(s);
+  }
+  std::vector<twowaySprite*>::iterator ptr = painters.begin();
+  ++ptr;
+  sort(ptr, painters.end(), SpriteLess());
+
+  unsigned int i = 0;
+  for (auto sprite : painters) {
+    unsigned int offset = 50;
+    std::string name = sprite->getName();
+    int px = rand()%worldWidth + (rand()%offset * (rand()%2?1:-1));
+    int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y") + (rand()%offset * (rand()%2?1:-1));
+
+    if(i < painters.size()/3) offset = 25;
+    else if(i < (2*painters.size())/3) offset = 375;
+    else offset = 700;
+
+    int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
+    if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%offset * (rand()%2?1:-1));
+    int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
+    if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%offset * (rand()%2?1:-1));
+    sprite->setVelocity(Vector2f(vx,vy));
+    sprite->setPosition(Vector2f(px,py));
+  }
+
+
+
+
   Viewport::getInstance().setObjectToTrack(player);
   std::cout << "Loading complete" << std::endl;
 }
@@ -132,16 +181,18 @@ void Engine::draw() const {
   textColor.a = Gamedata::getInstance().getXmlInt("font/alpha");
   
   sky.draw();
-  if (dragonballs.size() <= 0){
+  if (invoke){
     sky2.draw();
   }
   city.draw();
   for(auto sprite : dragonballs){
     if ( !(sprite->exploded()) ) sprite->draw();
   }
-  if (dragonballs.size() <= 0){
+  if (invoke){
     shenron->setScale(0.45);
     shenron->draw();
+    Hud::getInstance().win(renderer);
+    clock.pause();
   }
   land.draw();
   for(auto sprite : sprites){
@@ -172,19 +223,16 @@ void Engine::draw() const {
     IOmod::getInstance().writeImage(ball, x, y);
   }
 
+    for(auto* s : painters) s->draw();
+
+
   if (dragonballs.size() > 0){
     std::stringstream strm;
     strm << dragonballs.size() << " Dragon Balls Remaining";
     IOmod::getInstance().writeText(strm.str(), 500, 120, textColor);
   } else {
-    SDL_Color textColor1;
-    textColor1.r = Gamedata::getInstance().getXmlInt("hud/border/Color/red");
-    textColor1.g = Gamedata::getInstance().getXmlInt("hud/border/Color/blue");
-    textColor1.b = Gamedata::getInstance().getXmlInt("hud/border/Color/green");
-    textColor1.a = Gamedata::getInstance().getXmlInt("hud/border/Color/alpha");
-    IOmod::getInstance().writeText(" All 7 Dragon Balls Collected", 250, 120, textColor1);
-    IOmod::getInstance().writeText(" Summon Shendron", 250, 150, textColor1);
-  }
+    if(!invoke) Hud::getInstance().summon(renderer);
+    }
 
   strategies[currentStrategy]->draw();
   if ( collision ) {
@@ -192,17 +240,22 @@ void Engine::draw() const {
   }
 
   drawHud();
+
+  if ( player->exploded() ) {
+    Hud::getInstance().gameover(renderer);
+    // clock.pause();
+  }
   viewport.draw();  
   SDL_RenderPresent(renderer);
 }
 
 void Engine::checkForCollisions() {
   collision = false;
-  for ( const Drawable* d : sprites ) {
-    if ( strategies[currentStrategy]->execute(*player, *d) ) {
-      collision = true;
-    }
-  }
+  // for ( const MultiSprite* d : sprites ) {
+  //   if ( strategies[currentStrategy]->execute(*player, *d) ) {
+  //     collision = true;
+  //   }
+  // }
 
   // if ( strategies[currentStrategy]->execute(*player, *enemy) ) {
   //   collision = true;
@@ -210,16 +263,24 @@ void Engine::checkForCollisions() {
   //   // dragonballs.push_back( new SmartSprite("Ball1", pos, w, h) );
   // }
 
-  if ( strategies[currentStrategy]->execute(*sprites[0], *player) ) {
-    collision = true;
-    player->explode();
-  }
+  // if ( strategies[currentStrategy]->execute(*sprites[0], *player) ) {
+  //   collision = true;
+  //   player->explode();
+  // }
   // for ( const auto d : player->getBullets() ) {
   //   if ( strategies[currentStrategy]->execute(*sprites[0], d) ) {
   //     collision = true;
   //     sprites[0]->explode();
   //   }
   // }
+  for(const auto enemy : enemies){
+    for (const auto d : enemy->getBullets() ) {
+      if ( strategies[currentStrategy]->execute(d, *player) ) {
+        (player)->explode();
+      }
+    }
+  }
+
   for ( const auto d : player->getBullets() ) {
     auto it = enemies.begin();
     while ( it != enemies.end() ) {
@@ -268,16 +329,36 @@ void Engine::checkForCollisions() {
 }
 
 void Engine::update(Uint32 ticks) {
-    std::cout << counter << ", " << player->getLimiter() << std::endl;
-    player->setObstruct(counter);
+  if (invoke){
+    auto it = sprites.begin();
+    while ( it != sprites.end() ) {
+        delete (*it);
+        it = sprites.erase(it);
+    }
+    auto it1 = painters.begin();
+    while ( it1 != painters.end() ) {
+        delete (*it1);
+        it1 = painters.erase(it1);
+    }
+    sky2.update();
+  }
+  player->setObstruct(counter);
   if(enemies.size()<=0 && counter < 7){
     player->setObstruct(++counter);
-    std::cout << counter << ", " << player->getLimiter() << std::endl;
-    for (unsigned int i = 0; i < 3; ++i) {
-      std::string name = "cycle";
+    for (unsigned int i = 0; i < 1; ++i) {
+      std::string name;
+      switch(counter){
+        case 0: name = "blah"; break;
+        case 1: name = "piccolo"; break;
+        case 2: name = "raditz"; break;
+        case 3: name = "nappa"; break;
+        case 4: name = "rakoom"; break;
+        case 5: name = "ginyu"; break;
+        case 6: default: name = "frieza"; break;
+      }
+      // std::string name = "cycle";
       int px = player->getLimiter() + 200;
       int py = rand()%worldHeight;
-      // int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y");
       int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
       if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
       int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
@@ -286,23 +367,11 @@ void Engine::update(Uint32 ticks) {
       enemies.push_back(new EnemyShooting(name.c_str(), px, py, vx, vy));
     }
   }
-  // player->update(ticks);
-  // if(enemies.size()<=0){
-  //   player->setObstruct(++counter);
-  //   std::cout << counter << ", " << player->getLimiter() << std::endl;
-  //   for (unsigned int i = 0; i < 5; ++i) {
-  //     std::string name = "cycle";
-  //     int px = player->getLimiter() + 200;
-  //     int py = rand()%worldHeight;
-  //     // int py = Gamedata::getInstance().getXmlInt(name+"/startLoc/y");
-  //     int vx = Gamedata::getInstance().getXmlInt(name+"/speedX");
-  //     if(vx !=0) vx = (vx * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
-  //     int vy = Gamedata::getInstance().getXmlInt(name+"/speedY");
-  //     if(vy !=0) vy = (vy * (rand()%2?1:-1)) + (rand()%50 * (rand()%2?1:-1));
-  //     std::cout << px << ", " << py << ", " << vx << ", " << vy << ", " << rand()%2 << std::endl;
-  //     enemies.push_back(new EnemyShooting(name.c_str(), px, py, vx, vy));
-  //   }
-  // }
+
+  if ( player->exploded() ) {
+    // Hud::getInstance().gameover(renderer);
+    clock.pause();
+  }
 
   auto it = enemies.begin();
   while ( it != enemies.end() ) {
@@ -315,6 +384,10 @@ void Engine::update(Uint32 ticks) {
       ++it;
     } 
   }
+
+
+  for(auto* s : painters) s->update(ticks);
+
   for(auto sprite : dragonballs){
   	sprite->update(ticks);
   }
@@ -325,7 +398,6 @@ void Engine::update(Uint32 ticks) {
   //   sprite->update(ticks);
   // }
   player->update(ticks);
-  // enemy->update(ticks);
   if (dragonballs.size() <= 0){
     shenron->update(ticks);
   }
@@ -372,11 +444,19 @@ bool Engine::play() {
           clock.unpause();
           return true;
         }
+        if ( keystate[SDL_SCANCODE_RETURN] && dragonballs.size() == 0) {
+          invoke = true;
+        }
         if ( keystate[SDL_SCANCODE_SPACE] ) {
             player->shoot();
         }
         if ( keystate[SDL_SCANCODE_G] ) {
-            counter = 8;
+          auto it = enemies.begin();
+          while ( it != enemies.end() ) {
+              delete (*it);
+              it = enemies.erase(it);
+          }
+          counter = 8;
         }
         if ( keystate[SDL_SCANCODE_M] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();
