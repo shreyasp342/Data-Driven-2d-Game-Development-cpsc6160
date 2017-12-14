@@ -169,7 +169,7 @@ void Engine::draw() const {
     shenron->setScale(0.45);
     shenron->draw();
     Hud::getInstance().win(renderer);
-    clock.pause();
+    // clock.pause();
   }
   else{
     for(auto* s : painters) s->draw();

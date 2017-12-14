@@ -4,28 +4,35 @@ Course: CPSC 6160
 
 Clemson Email Address: sprabha@clemson.edu
 
-Project no: 5
+Project no: 6
 
-Project due date: December 3 2017
+Project due date: December 13 2017
 
-Project description: Object Pooling, Explosions, and Projectiles
+Project description: A Playable Game
 
-The easiest part of this project: Creating an explosion using the chunking example.
+The easiest part of this project: Adding Sound. Creating God Mode.
 
 Problems that I had in completing this project: 
-1. When I try to explode both the sprites/characters when collided, the chunks created also trigger explosion as soon as the character re-appers.
-2. Struggled a bit when trying to explode the sprite after the energy ball collides with it. I was trying to call the detach and delete immediately after calling the explode function, not giving enough time of the animation to take place. So, I ended up using a flag to delete the sprite after the explosion animation is completed.
-3. Struggled with implementing shooting and pooling. It took me a lot of time to implement them. Struggled a bit with the hierachy.
+I did not have any major problems. But it took a lot of time to complete everything that I wanted. Restricting the player was challenging.
+I had problem recording both the game sound and the video. I tried a lot of tools like avconv, ffmpeg and kdenlive. But could not combine the audio and video files and also speed it upso that I get it less than 20s. I ended up doing a 42s video.
 
 Project Explaination:
-Goku on Nimbus, is trying to collect all the 7 dragonballs. The dragon balls are smartsprites trying to get away from Goku. The dragon balls explodes when goku collects it. The dragonballs count reduces after all the chunks of the dragon ball disappears. The player (Goku) explodes when he colloides with valor (moltres) and reappears again after the explosion animation. Pressing F1 brings up 2 HUDs - 1. The information HUD and 2. The object pooling HUD which shows the size of free list and bullet list. The projectiles are energy balls. When the spacebar is pressed, Goku shoots energy balls. These energy balls when collided with the bicycle triggers the explosion of bicycle. 
+Goku on Nimbus, is trying to collect all the 7 dragonballs. The dragon balls are located at each intervals. I have locked the movement of Goku in the Y-direction. Whenever Goku destroys an enemy, the Y-direction limiter moves forward, and he is able to collect the dragon ball. I have given God Mode functionality by pressing 'G' on the keyboard. In god mode, all the limiters except for the last one is removed and you can collect all the dragon balls. 'SpaceBar' is for shooting the enemies. Once all the 7 dragon balls are collected, you can press the 'Return' (i.e., Enter key) key on the keyboard to summon Shenron the dragon to get your wishes granted. You can restart the game at any time by pressing 'R' key on the keyboard.
+I have added Player and Enemy health, painter's algorithm along with sounds. I have given player restriction. And background change.
+I have left the valor (moltress) sprites as Dr. Malloy asked me to leave them there, when I went to talk to him few days before the project 5 submission.
+In the painter's algorithm, I did not feel the need to draw the crows layer by layer as the crows are always on the sky and I did not want few of them to go behind the first or the 2nd layer. But I did scale them and gave them velocities based on their size.
+Instead of just counting the number of dragon balls collected and displaying text on the screen, I am drawing image of the dragon ball collected (with the star) on the top right of the screen.
+Finally, I have make the game in such a way that, once you go to God Mode all the enemies are dead and all the limiters except for the last one is lifted. Even after you come back from the God Mode, the enemies are all dead. 
 
 Sources:
-1. cycleleft.png and cycleright.png- My project 2 image. Generated two different images of bicycle with variations in pedals and wheel.
-2. ball1.png, ball2.png, ball3.png, ball4.png, ball5.png, ball6.png, ball7.png - extracted frames and resized from gif http://vignette3.wikia.nocookie.net/dragonball/images/6/63/Dragon_Balls_.png/revision/latest/scale-to-width-down/2000?cb=20120225164126
+1. ball1.png, ball2.png, ball3.png, ball4.png, ball5.png, ball6.png, ball7.png - extracted frames and resized from gif http://vignette3.wikia.nocookie.net/dragonball/images/6/63/Dragon_Balls_.png/revision/latest/scale-to-width-down/2000?cb=20120225164126
 3. energyball.png - https://vignette.wikia.nocookie.net/narutofanon/images/e/e2/Lightningballc.png/revision/latest?cb=20150630121734
 3. valor.png - extracted frames and resized from gif - https://i.imgur.com/rnJ4vaO.gif
 4. gokuLeft.png gokuRight.png - extracted frames from gif - https://media.giphy.com/media/egtmRUZfUCnNm/200.gif
 5. sky.png, city.png and land.png - Used 'city' from the zip file downloaded from http://spritedatabase.net/file/20596/Backgrounds
+6. All enemy sprites - https://www.spriters-resource.com/3ds/dragonballzextremebutoden/
+7. Shenron.png - merged images from https://vignette1.wikia.nocookie.net/qinae-the-middle-kingdom/images/c/c6/Shenlong_by_xkyrillx-d6f6bdd.png/revision/latest?cb=20140702193353 and http://img02.deviantart.net/2d87/i/2015/124/8/3/dragon_balls_by_kaylathehedgehog-d8s4geo.png
+8. Sound file - extracted only the audio from https://www.youtube.com/watch?v=t76C7N7azIs&list=RDNKdsRCMKI-k&index=30
+
 
 

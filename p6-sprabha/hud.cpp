@@ -203,7 +203,8 @@ void Hud::draw(SDL_Renderer * const renderer){
   io.writeText(gdata.getXmlStr("hud/left").c_str(), box.x, box.y+=30, textColor);
   io.writeText(gdata.getXmlStr("hud/right").c_str(), box.x, box.y+=30, textColor);
   io.writeText(gdata.getXmlStr("hud/down").c_str(), box.x, box.y+=30, textColor);
-  io.writeText(gdata.getXmlStr("hud/collision").c_str(), box.x, box.y+=30, textColor);
   io.writeText(gdata.getXmlStr("hud/hudshow").c_str(), box.x, box.y+=30, textColor);
+  io.writeText(gdata.getXmlStr("hud/restart").c_str(), box.x, box.y+=30, textColor);
+  io.writeText(gdata.getXmlStr("hud/godmode").c_str(), box.x, box.y+=30, textColor);
 }
 
